@@ -26,7 +26,7 @@ NavilIME for Mac(Manwoo Yi, GPLv3)의 포크. 원작자 크레딧과 GPLv3는 �
   한글이 자모 단위로 확정된다. 평소 메뉴는 고정하고, 상태가 실제로 바뀔 때만 항목을 넣고 뺀다(`InputMenu`).
 
 ## 버전·릴리스
-- 규칙은 README "버전과 릴리스". 변경 내용은 `CHANGELOG.md`의 `## [Unreleased]`에 날짜별 `###` 항목으로 쌓는다.
+- 규칙은 DEVELOPMENT.md "버전과 릴리스". 변경 내용은 `CHANGELOG.md`의 `## [Unreleased]`에 날짜별 `###` 항목으로 쌓는다.
 - 릴리스는 사용자가 요청할 때만: 버전 절로 옮기고 `MARKETING_VERSION`을 목표 버전으로 맞춰 커밋·push한 뒤
   `Tools/release.sh`. 새 버전은 `-alpha.N`(pre-release)로 내고, 사용자가 써 보고 문제없다고 하면 같은 커밋을 정식으로.
 - 이미 낸 태그는 옮기거나 지우지 않는다. 문제가 발견되면 노트에 "알려진 문제"를 덧붙인다.

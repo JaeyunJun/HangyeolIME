@@ -5,7 +5,7 @@
 아래는 포크 후 수정한 내용입니다. 2.0.0-alpha.4까지는 이름이 NavilIME였습니다. 원본: [navilera/NavilIMEforMac](https://github.com/navilera/NavilIMEforMac)
 
 버전마다 `## [버전]` 절이 GitHub 릴리스 노트가 된다(`Tools/release.sh`). 버전 규칙은
-[README](README.md#버전과-릴리스) 참고. 그 안의 날짜별 항목은 작업 기록이다.
+[DEVELOPMENT.md](DEVELOPMENT.md#버전과-릴리스) 참고. 그 안의 날짜별 항목은 작업 기록이다.
 
 ## [Unreleased]
 
