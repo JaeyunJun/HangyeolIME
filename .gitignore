@@ -11,5 +11,8 @@ NavilIME/Local.xcconfig
 xcuserdata/
 *.xcuserstate
 
+# graft's local graph cache — regenerable, not committed (run `graft build`).
+/graft/
+
 # Python
 __pycache__/
