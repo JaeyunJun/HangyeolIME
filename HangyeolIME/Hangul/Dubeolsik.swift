@@ -1,6 +1,6 @@
 //
 //  Dubeolsik.swift
-//  NavilIME
+//  HangyeolIME
 //
 //  두벌식 자판 배치와 조합 규칙. 키는 ASCII 문자(Shift 반영)이고, 여러 키를 이어 붙인
 //  문자열(예: "hk" → ㅘ)이 겹자모를 뜻한다.

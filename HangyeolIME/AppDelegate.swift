@@ -1,6 +1,6 @@
 //
 //  AppDelegate.swift
-//  NavilIME
+//  HangyeolIME
 //
 //  Created by Manwoo Yi on 9/3/22.
 //

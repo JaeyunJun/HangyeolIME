@@ -1,6 +1,6 @@
 // 코드 서명 설정 — 개인 빌드용 베이스 설정
 //
-// 기본 서명 신원은 로그인 키체인의 자체 서명 인증서 "NavilIME Local Signing"이다.
+// 기본 서명 신원은 로그인 키체인의 자체 서명 인증서 "HangyeolIME Local Signing"이다.
 // 손쉬운 사용(Accessibility) 권한은 서명 신원에 묶이는데, 이 인증서로 서명하면 신원이
 // "번들 ID + 인증서"로 고정되어 재빌드해도 권한이 유지된다. (ad-hoc은 바이너리 해시가
 // 신원이라 재빌드마다 권한이 날아간다.)
@@ -20,7 +20,7 @@
 CODE_SIGN_INJECT_BASE_ENTITLEMENTS[config=Release] = NO
 
 CODE_SIGN_STYLE = Manual
-CODE_SIGN_IDENTITY = NavilIME Local Signing
+CODE_SIGN_IDENTITY = HangyeolIME Local Signing
 DEVELOPMENT_TEAM =
 
 // 자체 서명 인증서에는 Team ID가 없다. Hardened Runtime의 라이브러리 검증은 같은 Team ID의

@@ -1,11 +1,11 @@
 //
 //  make-icon.swift
-//  NavilIME 입력기 아이콘 생성
+//  HangyeolIME 입력기 아이콘 생성
 //
 //  메뉴 막대·입력 소스 설정에 보이는 아이콘. 투명 배경에 검은 '가'만 그린 템플릿 이미지라,
 //  Info.plist의 TISIconIsTemplate과 함께 macOS가 다크·라이트 모드에 맞춰 색을 입힌다.
 //
-//  사용: swift Tools/make-icon.swift NavilIME/navilime.tiff
+//  사용: swift Tools/make-icon.swift HangyeolIME/hangyeol.tiff
 //
 
 import AppKit
@@ -49,7 +49,7 @@ func render(scale: Int) -> NSBitmapImageRep {
     return rep
 }
 
-let output = CommandLine.arguments.count > 1 ? CommandLine.arguments[1] : "navilime.tiff"
+let output = CommandLine.arguments.count > 1 ? CommandLine.arguments[1] : "hangyeol.tiff"
 let image = NSImage(size: NSSize(width: points, height: points))
 image.addRepresentation(render(scale: 1))
 image.addRepresentation(render(scale: 2))

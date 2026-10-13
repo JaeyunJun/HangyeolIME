@@ -1,6 +1,6 @@
 //
 //  Hangul.swift
-//  NavilIME
+//  HangyeolIME
 //
 //  한글 오토마타. 키를 하나씩 받아 조합을 끝낸 글자(commit)와 조합 중인 글자(preedit)를
 //  만든다. 입력기는 키마다 process()를 부르고 takeCommit()/takePreedit()로 결과를 가져간다.

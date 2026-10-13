@@ -12,7 +12,7 @@
 		CF39BCA228C42D7200CB35AE /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF39BCA128C42D7200CB35AE /* AppDelegate.swift */; };
 		CF39BCA428C42D7300CB35AE /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CF39BCA328C42D7300CB35AE /* Assets.xcassets */; };
 		CF39BCA728C42D7300CB35AE /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = CF39BCA528C42D7300CB35AE /* MainMenu.xib */; };
-		CF39BCAF28C49BDA00CB35AE /* NavilIMEInputController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF39BCAE28C49BDA00CB35AE /* NavilIMEInputController.swift */; };
+		CF39BCAF28C49BDA00CB35AE /* HangyeolInputController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF39BCAE28C49BDA00CB35AE /* HangyeolInputController.swift */; };
 		CF40CD3028EFF6CC000CCB7B /* Dubeolsik.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF40CD2F28EFF6CB000CCB7B /* Dubeolsik.swift */; };
 		CF482862291A21DD0020EC2B /* ComposeBypass.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF482861291A21DD0020EC2B /* ComposeBypass.swift */; };
 		CF6561F928D1AE240085AC8D /* Hangul.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF6561F828D1AE240085AC8D /* Hangul.swift */; };
@@ -24,19 +24,19 @@
 		CFA10B0B000000000000A00C /* KeyMap.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFA10B0A000000000000A00B /* KeyMap.swift */; };
 		CFA10B09000000000000A00A /* InputSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFA10B08000000000000A009 /* InputSession.swift */; };
 		CFA10B01000000000000BB01 /* TTYPasswordWatcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFA10B00000000000000FF01 /* TTYPasswordWatcher.swift */; };
-		CF8F931D2D718F5300955352 /* navilime.tiff in Resources */ = {isa = PBXBuildFile; fileRef = CF8F931C2D718F5300955352 /* navilime.tiff */; };
+		CF8F931D2D718F5300955352 /* hangyeol.tiff in Resources */ = {isa = PBXBuildFile; fileRef = CF8F931C2D718F5300955352 /* hangyeol.tiff */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		CFA10B0E000000000000A00F /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		CFA10B0F000000000000A010 /* ko */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ko; path = ko.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		CF3237BC28D1AACE008941FE /* Log.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Log.swift; sourceTree = "<group>"; };
-		CF39BC9E28C42D7200CB35AE /* NavilIME.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = NavilIME.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		CF39BC9E28C42D7200CB35AE /* HangyeolIME.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HangyeolIME.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CF39BCA128C42D7200CB35AE /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		CF39BCA328C42D7300CB35AE /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		CF39BCA628C42D7300CB35AE /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/MainMenu.xib; sourceTree = "<group>"; };
-		CF39BCA828C42D7300CB35AE /* NavilIME.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = NavilIME.entitlements; sourceTree = "<group>"; };
-		CF39BCAE28C49BDA00CB35AE /* NavilIMEInputController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavilIMEInputController.swift; sourceTree = "<group>"; };
+		CF39BCA828C42D7300CB35AE /* HangyeolIME.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = HangyeolIME.entitlements; sourceTree = "<group>"; };
+		CF39BCAE28C49BDA00CB35AE /* HangyeolInputController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HangyeolInputController.swift; sourceTree = "<group>"; };
 		CF39BCB028C49D3800CB35AE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		CF40CD2F28EFF6CB000CCB7B /* Dubeolsik.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Dubeolsik.swift; sourceTree = "<group>"; };
 		CF482861291A21DD0020EC2B /* ComposeBypass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComposeBypass.swift; sourceTree = "<group>"; };
@@ -51,7 +51,7 @@
 		CFA10B00000000000000FF01 /* TTYPasswordWatcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TTYPasswordWatcher.swift; sourceTree = "<group>"; };
 		CFA10B02000000000000A003 /* Signing.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Signing.xcconfig; sourceTree = "<group>"; };
 		CFA10B03000000000000A004 /* Local.xcconfig.example */ = {isa = PBXFileReference; lastKnownFileType = text; path = Local.xcconfig.example; sourceTree = "<group>"; };
-		CF8F931C2D718F5300955352 /* navilime.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = navilime.tiff; sourceTree = "<group>"; };
+		CF8F931C2D718F5300955352 /* hangyeol.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = hangyeol.tiff; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -68,7 +68,7 @@
 		CF39BC9528C42D7200CB35AE = {
 			isa = PBXGroup;
 			children = (
-				CF39BCA028C42D7200CB35AE /* NavilIME */,
+				CF39BCA028C42D7200CB35AE /* HangyeolIME */,
 				CF39BC9F28C42D7200CB35AE /* Products */,
 			);
 			sourceTree = "<group>";
@@ -76,18 +76,18 @@
 		CF39BC9F28C42D7200CB35AE /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				CF39BC9E28C42D7200CB35AE /* NavilIME.app */,
+				CF39BC9E28C42D7200CB35AE /* HangyeolIME.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		CF39BCA028C42D7200CB35AE /* NavilIME */ = {
+		CF39BCA028C42D7200CB35AE /* HangyeolIME */ = {
 			isa = PBXGroup;
 			children = (
 				CF6561F728D1AE010085AC8D /* Hangul */,
 				CF39BCB028C49D3800CB35AE /* Info.plist */,
 				CF39BCA128C42D7200CB35AE /* AppDelegate.swift */,
-				CF39BCAE28C49BDA00CB35AE /* NavilIMEInputController.swift */,
+				CF39BCAE28C49BDA00CB35AE /* HangyeolInputController.swift */,
 				CF3237BC28D1AACE008941FE /* Log.swift */,
 				CF714A5A28E6C273000CBDEE /* InputMenu.swift */,
 				CFA10B00000000000000A001 /* SpecialKeyTap.swift */,
@@ -99,13 +99,13 @@
 				CF482861291A21DD0020EC2B /* ComposeBypass.swift */,
 				CF39BCA328C42D7300CB35AE /* Assets.xcassets */,
 				CF39BCA528C42D7300CB35AE /* MainMenu.xib */,
-				CF39BCA828C42D7300CB35AE /* NavilIME.entitlements */,
+				CF39BCA828C42D7300CB35AE /* HangyeolIME.entitlements */,
 				CFA10B02000000000000A003 /* Signing.xcconfig */,
 				CFA10B03000000000000A004 /* Local.xcconfig.example */,
 				CFA10B0C000000000000A00D /* InfoPlist.strings */,
-				CF8F931C2D718F5300955352 /* navilime.tiff */,
+				CF8F931C2D718F5300955352 /* hangyeol.tiff */,
 			);
-			path = NavilIME;
+			path = HangyeolIME;
 			sourceTree = "<group>";
 		};
 		CF6561F728D1AE010085AC8D /* Hangul */ = {
@@ -121,9 +121,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		CF39BC9D28C42D7200CB35AE /* NavilIME */ = {
+		CF39BC9D28C42D7200CB35AE /* HangyeolIME */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = CF39BCAB28C42D7300CB35AE /* Build configuration list for PBXNativeTarget "NavilIME" */;
+			buildConfigurationList = CF39BCAB28C42D7300CB35AE /* Build configuration list for PBXNativeTarget "HangyeolIME" */;
 			buildPhases = (
 				CF39BC9A28C42D7200CB35AE /* Sources */,
 				CF39BC9B28C42D7200CB35AE /* Frameworks */,
@@ -133,9 +133,9 @@
 			);
 			dependencies = (
 			);
-			name = NavilIME;
-			productName = NavilIME;
-			productReference = CF39BC9E28C42D7200CB35AE /* NavilIME.app */;
+			name = HangyeolIME;
+			productName = HangyeolIME;
+			productReference = CF39BC9E28C42D7200CB35AE /* HangyeolIME.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -153,7 +153,7 @@
 					};
 				};
 			};
-			buildConfigurationList = CF39BC9928C42D7200CB35AE /* Build configuration list for PBXProject "NavilIME" */;
+			buildConfigurationList = CF39BC9928C42D7200CB35AE /* Build configuration list for PBXProject "HangyeolIME" */;
 			compatibilityVersion = "Xcode 13.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -167,7 +167,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				CF39BC9D28C42D7200CB35AE /* NavilIME */,
+				CF39BC9D28C42D7200CB35AE /* HangyeolIME */,
 			);
 		};
 /* End PBXProject section */
@@ -177,7 +177,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				CF8F931D2D718F5300955352 /* navilime.tiff in Resources */,
+				CF8F931D2D718F5300955352 /* hangyeol.tiff in Resources */,
 				CFA10B0D000000000000A00E /* InfoPlist.strings in Resources */,
 				CF39BCA428C42D7300CB35AE /* Assets.xcassets in Resources */,
 				CF39BCA728C42D7300CB35AE /* MainMenu.xib in Resources */,
@@ -204,7 +204,7 @@
 				CFA10B0B000000000000A00C /* KeyMap.swift in Sources */,
 				CFA10B09000000000000A00A /* InputSession.swift in Sources */,
 				CFA10B01000000000000BB01 /* TTYPasswordWatcher.swift in Sources */,
-				CF39BCAF28C49BDA00CB35AE /* NavilIMEInputController.swift in Sources */,
+				CF39BCAF28C49BDA00CB35AE /* HangyeolInputController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -354,13 +354,13 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_ENTITLEMENTS = NavilIME/NavilIME.entitlements;
+				CODE_SIGN_ENTITLEMENTS = HangyeolIME/HangyeolIME.entitlements;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 370;
 				DEAD_CODE_STRIPPING = YES;
 				ENABLE_HARDENED_RUNTIME = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = NavilIME/Info.plist;
+				INFOPLIST_FILE = HangyeolIME/Info.plist;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				INFOPLIST_KEY_NSMainNibFile = MainMenu;
@@ -371,7 +371,7 @@
 				);
 				MACOSX_DEPLOYMENT_TARGET = 13.5;
 				MARKETING_VERSION = 2.0.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.navilera.inputmethod.NavilIME;
+				PRODUCT_BUNDLE_IDENTIFIER = com.jaeyunjun.inputmethod.HangyeolIME;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -384,13 +384,13 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_ENTITLEMENTS = NavilIME/NavilIME.entitlements;
+				CODE_SIGN_ENTITLEMENTS = HangyeolIME/HangyeolIME.entitlements;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 370;
 				DEAD_CODE_STRIPPING = YES;
 				ENABLE_HARDENED_RUNTIME = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = NavilIME/Info.plist;
+				INFOPLIST_FILE = HangyeolIME/Info.plist;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				INFOPLIST_KEY_NSMainNibFile = MainMenu;
@@ -401,7 +401,7 @@
 				);
 				MACOSX_DEPLOYMENT_TARGET = 13.5;
 				MARKETING_VERSION = 2.0.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.navilera.inputmethod.NavilIME;
+				PRODUCT_BUNDLE_IDENTIFIER = com.jaeyunjun.inputmethod.HangyeolIME;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -411,7 +411,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		CF39BC9928C42D7200CB35AE /* Build configuration list for PBXProject "NavilIME" */ = {
+		CF39BC9928C42D7200CB35AE /* Build configuration list for PBXProject "HangyeolIME" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				CF39BCA928C42D7300CB35AE /* Debug */,
@@ -420,7 +420,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		CF39BCAB28C42D7300CB35AE /* Build configuration list for PBXNativeTarget "NavilIME" */ = {
+		CF39BCAB28C42D7300CB35AE /* Build configuration list for PBXNativeTarget "HangyeolIME" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				CF39BCAC28C42D7300CB35AE /* Debug */,

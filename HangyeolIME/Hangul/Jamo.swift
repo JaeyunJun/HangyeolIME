@@ -1,6 +1,6 @@
 //
 //  Jamo.swift
-//  NavilIME
+//  HangyeolIME
 //
 //  현대 한글 자모. rawValue는 첫가끝(조합형) 코드다.
 //

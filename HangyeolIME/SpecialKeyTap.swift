@@ -1,13 +1,13 @@
 //
 //  SpecialKeyTap.swift
-//  NavilIME
+//  HangyeolIME
 //
 //  전역 키 가로채기(CGEventTap)로 특수키 조합(Shift+ESC → ~ 등)을 입력 소스와 상관없이 처리한다.
 //
 //  이 탭이 특수키의 유일한 처리 경로다. ⌘ 조합은 AppKit의 키 이퀴벌런트 단계에서 소비되어
 //  입력기(IMK handle)까지 내려오지 않는다. 세션 레벨 탭은 AppKit보다 먼저 이벤트를 본다.
 //
-//  - 한글(NavilIME 활성): 이벤트를 삼키고 입력기에 넘긴다. 문자를 바꿔 넣은 이벤트는 입력기의
+//  - 한글(HangyeolIME 활성): 이벤트를 삼키고 입력기에 넘긴다. 문자를 바꿔 넣은 이벤트는 입력기의
 //    handle까지 오지 않아서(로그로 확인) 흘려보내면 아무것도 입력되지 않는다.
 //    입력기가 조합 중인 글자를 확정하고 그 뒤에 기호를 붙인다(insertSpecial).
 //  - 그 밖(영문 등): 모디파이어를 지우고 문자를 바꿔 넣어 앱으로 흘려보낸다.
@@ -59,7 +59,7 @@ final class SpecialKeyTap {
         return CGEvent.tapIsEnabled(tap: tap)
     }
 
-    // 시스템 권한 요청 창을 띄운다. 손쉬운 사용 목록에 NavilIME가 (꺼진 채로) 올라온다.
+    // 시스템 권한 요청 창을 띄운다. 손쉬운 사용 목록에 HangyeolIME가 (꺼진 채로) 올라온다.
     func requestPermissionPrompt() {
         let options = [kAXTrustedCheckOptionPrompt.takeUnretainedValue() as String: true] as CFDictionary
         _ = AXIsProcessTrustedWithOptions(options)
@@ -79,7 +79,7 @@ final class SpecialKeyTap {
             Log.debug("SpecialKeyTap: started")
             CFRunLoopRun()
         }
-        thread.name = "io.navilera.NavilIME.SpecialKeyTap"
+        thread.name = "com.jaeyunjun.HangyeolIME.SpecialKeyTap"
         thread.qualityOfService = .userInteractive
         tapThread = thread
         thread.start()

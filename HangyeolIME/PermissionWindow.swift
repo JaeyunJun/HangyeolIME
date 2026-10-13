@@ -1,6 +1,6 @@
 //
 //  PermissionWindow.swift
-//  NavilIME
+//  HangyeolIME
 //
 //  특수키 전역 입력(손쉬운 사용) 권한 상태 창. 시스템 설정 목록의 표시가 아니라 프로세스가
 //  실제로 받은 권한(AXIsProcessTrusted)과 탭이 실제로 도는지를 보여준다(서명이 바뀌면 둘이
@@ -50,7 +50,7 @@ final class PermissionWindow: NSObject, NSWindowDelegate {
         let w = NSWindow(contentRect: NSRect(x: 0, y: 0, width: 420, height: 200),
                          styleMask: [.titled, .closable],
                          backing: .buffered, defer: false)
-        w.title = "NavilIME 특수키 권한"
+        w.title = "한결 특수키 권한"
         w.isReleasedWhenClosed = false
         w.level = .floating
         w.delegate = self
@@ -90,10 +90,10 @@ final class PermissionWindow: NSObject, NSWindowDelegate {
 
         if !tap.isTrusted {
             statusLabel.stringValue = "❌ 권한 없음 — 특수키 조합이 동작하지 않습니다"
-            detailLabel.stringValue = "‘손쉬운 사용 설정 열기’를 눌러 목록에서 NavilIME를 켜세요. "
+            detailLabel.stringValue = "‘손쉬운 사용 설정 열기’를 눌러 목록에서 HangyeolIME를 켜세요. "
                 + "켜면 이 창이 자동으로 갱신됩니다.\n\n"
-                + "목록에 NavilIME가 이미 켜져 있는데도 계속 ‘권한 없음’이면, 재빌드로 서명이 "
-                + "바뀐 것입니다. 목록에서 NavilIME를 선택해 −로 지운 뒤 다시 추가하세요."
+                + "목록에 HangyeolIME가 이미 켜져 있는데도 계속 ‘권한 없음’이면, 재빌드로 서명이 "
+                + "바뀐 것입니다. 목록에서 HangyeolIME를 선택해 −로 지운 뒤 다시 추가하세요."
             openButton.isEnabled = true
         } else if !tap.isActive {
             // 권한 직후에는 탭 스레드가 뜨는 동안 잠깐 이 상태일 수 있다. 다음 조회에서 갱신된다.
@@ -110,7 +110,7 @@ final class PermissionWindow: NSObject, NSWindowDelegate {
     }
 
     @objc private func openSettings() {
-        // 시스템 권한 창을 띄우면 목록에 NavilIME가 (꺼진 채로) 올라온다. 설정 창도 함께 연다.
+        // 시스템 권한 창을 띄우면 목록에 HangyeolIME가 (꺼진 채로) 올라온다. 설정 창도 함께 연다.
         SpecialKeyTap.shared.requestPermissionPrompt()
         if let url = URL(string: "x-apple.systempreferences:com.apple.preference.security?Privacy_Accessibility") {
             NSWorkspace.shared.open(url)

@@ -1,6 +1,6 @@
 //
-//  NavilIMEInputController.swift
-//  NavilIME
+//  HangyeolInputController.swift
+//  HangyeolIME
 //
 //  Created by Manwoo Yi on 9/4/22.
 //
@@ -11,8 +11,8 @@
 import InputMethodKit
 import Carbon
 
-@objc(NavilIMEInputController)
-final class NavilIMEInputController: IMKInputController {
+@objc(HangyeolInputController)
+final class HangyeolInputController: IMKInputController {
     private var hangul = Hangul()
 
     override func activateServer(_ sender: Any!) {
@@ -63,7 +63,7 @@ final class NavilIMEInputController: IMKInputController {
 
         // 입력 소스가 이미 다른 것으로 바뀌었는데 그 소식이 앱에 닿기 전에 들어온 키다
         // (예: 열리면서 ABC로 바꾸는 Raycast에 바로 타이핑). 누가 바꿨든 조합하지 않는다.
-        if !InputSource.isNavilSelected() {
+        if !InputSource.isHangyeolSelected() {
             Log.debug("Source already switched away, passing key \(keyCode)")
             return passThrough(client)
         }

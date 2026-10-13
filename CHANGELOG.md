@@ -1,13 +1,24 @@
 # 변경 기록
 
-이 프로젝트는 **Manwoo Yi**([@navilera](https://github.com/navilera))님이 만든 macOS용 한글 입력기입니다.
+한결(HangyeolIME)은 **Manwoo Yi**([@navilera](https://github.com/navilera))님이 만든 macOS용 한글 입력기 NavilIME를 포크한 것입니다.
 세벌식 318Na 자판을 직접 디자인하고, 리눅스/윈도우/맥 전부 입력기를 직접 구현하신 분입니다.
-아래는 개인 용도로 포크하여 수정한 내용입니다. 원본: [navilera/NavilIMEforMac](https://github.com/navilera/NavilIMEforMac)
+아래는 포크 후 수정한 내용입니다. 2.0.0-alpha.4까지는 이름이 NavilIME였습니다. 원본: [navilera/NavilIMEforMac](https://github.com/navilera/NavilIMEforMac)
 
 버전마다 `## [버전]` 절이 GitHub 릴리스 노트가 된다(`Tools/release.sh`). 버전 규칙은
 [README](README.md#버전과-릴리스) 참고. 그 안의 날짜별 항목은 작업 기록이다.
 
 ## [Unreleased]
+
+### 2026-10-13 - 이름을 한결(HangyeolIME)로
+
+- 원작자 NavilIME와 구분되는 이름으로 바꿨다. 표시 이름 "한결"(영어 "Hangyeol"), 앱·저장소 `HangyeolIME`.
+- 번들 ID `com.navilera.inputmethod.NavilIME` → `com.jaeyunjun.inputmethod.HangyeolIME`
+  (`navilera`는 원작자 이름이다). 입력 모드 ID, IMK 연결 이름, 로그 subsystem
+  (`com.jaeyunjun.HangyeolIME`), 컨트롤러 클래스(`HangyeolInputController`), 서명 인증서
+  (`HangyeolIME Local Signing`)도 함께 바꿨다. 프로젝트·폴더도 `HangyeolIME`.
+- 원작자 NavilIME와 함께 설치할 수 있다.
+- **올릴 때 할 일**: 새 입력기라서 입력 소스에서 한국어 → 한결을 추가하고 옛 NavilIME를 지운 뒤,
+  손쉬운 사용 권한을 다시 허용한다(서명 인증서가 바뀜). 옛 `~/Library/Input Methods/NavilIME.app`은 지운다.
 
 ## [2.0.0-alpha.4] - 2026-10-13 · pre-release
 

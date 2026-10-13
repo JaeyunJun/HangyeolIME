@@ -1,6 +1,6 @@
 //
 //  KeyMap.swift
-//  NavilIME
+//  HangyeolIME
 //
 //  macOS 가상 키코드 → 문자. 물리 키 위치(US 배열) 기준이라 두벌식 자판 배치와 맞는다.
 //

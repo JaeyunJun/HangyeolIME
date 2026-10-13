@@ -1,5 +1,5 @@
 # 개인 서명 설정 (본인 Team ID 등) — 커밋하지 않음
-NavilIME/Local.xcconfig
+HangyeolIME/Local.xcconfig
 
 # macOS
 .DS_Store

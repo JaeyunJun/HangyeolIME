@@ -1,6 +1,6 @@
 // 서명 신원 덮어쓰기 템플릿 (선택).
 //
-// 기본값은 로컬 자체 서명 인증서 "NavilIME Local Signing"이다(Signing.xcconfig).
+// 기본값은 로컬 자체 서명 인증서 "HangyeolIME Local Signing"이다(Signing.xcconfig).
 // 대부분은 이 파일이 필요 없다. 다른 신원(예: Apple Development)으로 서명하고 싶을 때만
 // 이 파일을 같은 폴더에 "Local.xcconfig"로 복사해 값을 채운다. (.gitignore 대상)
 //

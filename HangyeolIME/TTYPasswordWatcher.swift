@@ -1,6 +1,6 @@
 //
 //  TTYPasswordWatcher.swift
-//  NavilIME
+//  HangyeolIME
 //
 //  터미널 암호 프롬프트(sudo, ssh, git 자격증명 등)를 감지해 그동안 한글 조합을 멈춘다.
 //  macOS는 암호 필드에서는 secure input을 켜 주지만 터미널 프롬프트에서는 켜 주지 않는다.

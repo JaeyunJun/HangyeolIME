@@ -26,7 +26,7 @@ git merge-base --is-ancestor "$SHA" origin/main || { echo "origin/main에 push�
 # 앱 버전을 넣기 전 커밋(7.0 그대로)에 소급해 붙일 때만 SKIP_APP_VERSION=1.
 STABLE="${VERSION%%-*}"
 [ "$SKIP_APP_VERSION" = 1 ] || {
-APP_VERSION=$(git show "$SHA:NavilIME.xcodeproj/project.pbxproj" | sed -n 's/.*MARKETING_VERSION = \(.*\);/\1/p' | head -1)
+APP_VERSION=$(git show "$SHA:HangyeolIME.xcodeproj/project.pbxproj" | sed -n 's/.*MARKETING_VERSION = \(.*\);/\1/p' | head -1)
 [ "$APP_VERSION" = "$STABLE" ] || {
   echo "커밋의 MARKETING_VERSION($APP_VERSION)이 $STABLE이 아닙니다."; exit 1; }
 }

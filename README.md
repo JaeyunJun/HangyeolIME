@@ -1,6 +1,6 @@
-# NavilIME for Mac (개인 포크)
+# 한결 (HangyeolIME)
 
-이 저장소는 **Manwoo Yi**([@navilera](https://github.com/navilera))님이 만든 [NavilIME for Mac](https://github.com/navilera/NavilIMEforMac)을 개인 용도로 포크한 것입니다.
+한결은 **Manwoo Yi**([@navilera](https://github.com/navilera))님이 만든 [NavilIME for Mac](https://github.com/navilera/NavilIMEforMac)을 포크해 이름을 바꾼 개인용 두벌식 입력기입니다. 원작의 GPLv3를 그대로 따릅니다.
 
 나빌 입력기는 원작자가 세벌식 318Na 자판을 직접 디자인하고, 리눅스/윈도우/맥에서 쓸 수 있도록 입력기를 직접 구현한 프로젝트입니다. 나는 세벌식을 쓰지 못하지만 macOS 기본 한글 입력기의 불안정함이 싫어서, 이 가볍고 깔끔한 입력기를 두벌식 전용으로 커스터마이징해서 쓰고 있습니다.
 
@@ -9,17 +9,17 @@
 macOS 13.5 이상. 배포용 바이너리는 없고 소스에서 빌드해 설치합니다(Xcode 필요, Apple 계정 불필요).
 
 ```
-git clone https://github.com/JaeyunJun/NavilIMEforMac.git
-cd NavilIMEforMac
+git clone https://github.com/JaeyunJun/HangyeolIME.git
+cd HangyeolIME
 git checkout <버전 태그>    # 예: v2.0.0. 생략하면 개발 중인 main
 Tools/build-ime.sh
 ```
 `Tools/build-ime.sh`는 2.0.0-alpha.3부터 있습니다. 그 전 버전은 Xcode에서 직접 빌드해야 합니다.
 
-1. 시스템 설정 → 키보드 → 입력 소스 → **+ → 한국어 → NavilIME**를 추가합니다.
+1. 시스템 설정 → 키보드 → 입력 소스 → **+ → 한국어 → 한결**을 추가합니다.
 2. 입력기 메뉴의 "특수키 전역 입력" 항목을 눌러 손쉬운 사용 권한을 허용합니다(특수키 조합용).
 
-버전 목록은 [Releases](https://github.com/JaeyunJun/NavilIMEforMac/releases)에 있습니다.
+버전 목록은 [Releases](https://github.com/JaeyunJun/HangyeolIME/releases)에 있습니다.
 pre-release(`-alpha`)는 알려진 문제가 있었거나 아직 검증 중인 버전입니다 — [버전과 릴리스](#버전과-릴리스).
 
 ## 기능 (원본 대비)
@@ -39,7 +39,7 @@ pre-release(`-alpha`)는 알려진 문제가 있었거나 아직 검증 중인 �
 - **한글/영문 등 입력기 상태와 무관하게** 동작합니다. 조합은 `CGEventTap` 한 경로에서만
   처리합니다 — IMK 입력 경로는 ⌘ 조합을 AppKit의 키 이퀴벌런트 단계에서 뺏겨 아예 받지
   못하므로, 표를 양쪽에 두면 한글 상태에서 `` ` ``와 `₩`가 나오지 않습니다.
-- 한글 상태에서는 탭이 이벤트를 삼키고 NavilIME에 직접 넘깁니다. 조합 중인 글자를
+- 한글 상태에서는 탭이 이벤트를 삼키고 한결에 직접 넘깁니다. 조합 중인 글자를
   먼저 확정한 뒤 그 뒤에 기호를 붙입니다(`한` 조합 중 `Shift+ESC` → `한~`).
   문자를 바꿔 넣은 이벤트를 흘려보내면 입력기의 `handle`까지 오지 않아 아무것도
   입력되지 않기 때문입니다. 영문 등 다른 입력 소스에서는 문자를 바꿔 앱으로 흘려보냅니다.
@@ -58,7 +58,7 @@ pre-release(`-alpha`)는 알려진 문제가 있었거나 아직 검증 중인 �
 
 한글 상태로 비밀번호를 치면 한글이 들어가 매번 수동으로 영문 전환해야 하던 문제를 없앴습니다.
 
-- macOS가 secure input을 켜는 자리(잠금 화면, 키체인, 앱의 암호 필드)에서는 NavilIME가
+- macOS가 secure input을 켜는 자리(잠금 화면, 키체인, 앱의 암호 필드)에서는 한결이
   **스스로 조합을 멈추고 키를 그대로 흘려보냅니다.** 한/영 상태는 건드리지 않으므로
   프롬프트를 빠져나오면 원래 한글 상태 그대로입니다.
 - macOS는 secure input을 켤 뿐 **입력 소스를 영문으로 갈아주지는 않습니다.** (측정으로 확인)
@@ -99,10 +99,10 @@ input을 켠 채로 에코는 남겨두고 한 줄을 받으므로, 비밀번호
 ### 한/영 전환은 macOS 입력 소스로 일원화
 
 입력기 내부의 한/영 모드(`self_eng_mode`)와 전용 단축키(오른쪽 Command 등)를 제거했습니다.
-한/영은 **macOS 입력 소스 선택**으로만 바뀝니다 — 한글은 NavilIME, 영문은 ABC입니다.
+한/영은 **macOS 입력 소스 선택**으로만 바뀝니다 — 한글은 한결, 영문은 ABC입니다.
 ⌃Space(기본) 또는 본인이 지정한 단축키를 쓰세요.
 
-내부 모드는 macOS가 알 수 없는 상태였습니다. 어느 앱에서든 "NavilIME 선택됨"으로만
+내부 모드는 macOS가 알 수 없는 상태였습니다. 어느 앱에서든 "한결 선택됨"으로만
 보이니 OS가 앱별 기억도, 암호 필드 대응도 해줄 수 없었습니다. 입력 소스로 일원화하면
 OS가 상태를 알게 됩니다.
 
@@ -114,7 +114,7 @@ OS가 상태를 알게 됩니다.
 
 Raycast처럼 열리면서 입력 소스를 ABC로 바꾸는 앱에 바로 타이핑해도 첫 글자가 한글로
 들어가지 않습니다. 전환을 요청한 뒤 앱에 실제로 반영되기까지 100~200ms(실측)가 걸리고
-그 사이 키는 여전히 입력기로 오는데, 입력기가 키마다 "시스템 입력 소스가 아직 NavilIME인가"를
+그 사이 키는 여전히 입력기로 오는데, 입력기가 키마다 "시스템 입력 소스가 아직 한결인가"를
 확인해 이미 바뀌었으면 조합하지 않고 흘려보냅니다. 누가 전환했든 같습니다.
 확인 비용은 키당 약 20~40µs입니다.
 
@@ -170,11 +170,11 @@ Tools/build-ime.sh Debug    # 진단용. os_log에 입력 내용이 남으니 �
 설치 뒤 새 빌드가 실제로 뜨는지 확인하고, 안 뜨면 직전 설치본으로 되돌립니다
 (입력기가 죽으면 그 입력 소스로는 아무것도 칠 수 없으므로).
 
-처음 한 번은 시스템 설정 → 키보드 → 입력 소스 → + → 한국어에서 NavilIME를 추가하고,
+처음 한 번은 시스템 설정 → 키보드 → 입력 소스 → + → 한국어에서 한결을 추가하고,
 트레이 메뉴의 권한 상태 창에서 손쉬운 사용 권한을 허용하세요.
 
 ### 코드 구조
-- `NavilIMEInputController`: 입력기 본체. 키 → 한글 엔진 → 조합 중/확정 글자 반영
+- `HangyeolInputController`: 입력기 본체. 키 → 한글 엔진 → 조합 중/확정 글자 반영
 - `Hangul/`: 한글 엔진(`Hangul`), 자모(`Jamo`), 두벌식 배치·조합 규칙(`Dubeolsik`)
 - `KeyMap`(키 위치표), `ComposeBypass`(조합 건너뛰기 패턴), `InputSource`(입력 소스 조회),
   `InputSession`(지금 입력 중인 세션, 끊긴 세션 복구)
@@ -182,29 +182,29 @@ Tools/build-ime.sh Debug    # 진단용. os_log에 입력 내용이 남으니 �
   `InputMenu`(입력기 메뉴), `PermissionWindow`(권한 상태 창), `Log`(Debug 전용 로그)
 
 ### 입력 모드 구조
-Apple 입력기처럼 입력기(`com.navilera.inputmethod.NavilIME`) 아래 입력 모드 하나
-(`...NavilIME.Dubeolsik`, 언어 ko)를 두고, 사용자는 이 모드를 선택합니다(`Info.plist`의
+Apple 입력기처럼 입력기(`com.jaeyunjun.inputmethod.HangyeolIME`) 아래 입력 모드 하나
+(`...HangyeolIME.Dubeolsik`, 언어 ko)를 두고, 사용자는 이 모드를 선택합니다(`Info.plist`의
 `ComponentInputModeDict`). 그래서 현재 입력 소스 ID는 모드 ID이고, 코드는 번들 ID로
-NavilIME인지 판단합니다(`InputSource`). 목록에 보이는 이름은 `*.lproj/InfoPlist.strings`.
+한결인지 판단합니다(`InputSource`). 목록에 보이는 이름은 `*.lproj/InfoPlist.strings`.
 
 ### 입력기 아이콘
 메뉴 막대·입력 위치 표시에는 입력 모드의 `TISIconLabels`(Primary = "가")를 macOS가 직접
-그립니다(앱 수준에 두면 무시됩니다). Apple 한국어 입력기가 쓰는 방식입니다. 그림 아이콘(`navilime.tiff`, 투명 배경의 '가'
+그립니다(앱 수준에 두면 무시됩니다). Apple 한국어 입력기가 쓰는 방식입니다. 그림 아이콘(`hangyeol.tiff`, 투명 배경의 '가'
 템플릿 이미지, `TISIconIsTemplate`)은 그 밖의 자리용이며 `swift Tools/make-icon.swift
-NavilIME/navilime.tiff`로 다시 만듭니다. 바꾼 뒤에는 macOS 아이콘 캐시 때문에 입력 소스를
+HangyeolIME/hangyeol.tiff`로 다시 만듭니다. 바꾼 뒤에는 macOS 아이콘 캐시 때문에 입력 소스를
 바꿨다 오거나 다시 로그인해야 보일 수 있습니다.
 
 ### 한글 엔진 테스트
 ```
 Tools/hangul-test.sh    # 고정 문장 + 무작위 20만 타의 엔진 출력이 기준과 같은지 확인
 ```
-`NavilIME/Hangul/`을 고친 뒤 돌립니다. 기준 해시는 정리 전 원작자 엔진의 출력입니다.
+`HangyeolIME/Hangul/`을 고친 뒤 돌립니다. 기준 해시는 정리 전 원작자 엔진의 출력입니다.
 
 ### 코드 서명 원칙: 로컬 인증서
 손쉬운 사용 권한은 앱의 코드 서명 신원에 묶입니다. ad-hoc 서명은 바이너리 해시가
 신원이라 재빌드할 때마다 권한이 날아갑니다. 그래서 이 저장소는 **로그인 키체인의
-자체 서명 인증서 `NavilIME Local Signing`으로 서명하는 것이 기본값**입니다
-(`NavilIME/Signing.xcconfig`). 신원이 "번들 ID + 인증서"로 고정되어 재빌드해도
+자체 서명 인증서 `HangyeolIME Local Signing`으로 서명하는 것이 기본값**입니다
+(`HangyeolIME/Signing.xcconfig`). 신원이 "번들 ID + 인증서"로 고정되어 재빌드해도
 권한이 유지됩니다.
 
 - 인증서는 키체인에 있으므로 저장소를 지웠다 다시 받아도 그대로 쓰입니다.
@@ -215,7 +215,7 @@ Tools/hangul-test.sh    # 고정 문장 + 무작위 20만 타의 엔진 출력�
 - 이 인증서에는 Team ID가 없어서, Debug 빌드가 코드를 `.debug.dylib`로 분리하면
   Hardened Runtime 라이브러리 검증에 걸려 실행 즉시 죽습니다. 그래서
   `ENABLE_DEBUG_DYLIB = NO`를 기본값에 넣었습니다.
-- 다른 신원(Apple Development 등)을 쓰려면 `NavilIME/Local.xcconfig`로 덮어쓰세요
+- 다른 신원(Apple Development 등)을 쓰려면 `HangyeolIME/Local.xcconfig`로 덮어쓰세요
   (`Local.xcconfig.example` 참고, `.gitignore` 대상).
 
 ---

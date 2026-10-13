@@ -1,13 +1,13 @@
 //
 //  secure-test.swift
-//  NavilIME 보조 도구 — 회귀 테스트
+//  HangyeolIME 보조 도구 — 회귀 테스트
 //
 //  secure input을 직접 켜서 암호 프롬프트와 같은 조건을 만든 뒤, 에코는 켜둔 채로
 //  한 줄을 받아 그대로 보여준다. 비밀번호 없이 "입력기가 제대로 비켜서는가"를
 //  눈으로 확인하기 위한 도구다.
 //
 //  실제 암호 프롬프트는 입력을 감추기 때문에 무엇이 들어갔는지 알 수 없어서,
-//  NavilIMEInputController의 IsSecureEventInputEnabled() 분기가 깨졌는지
+//  HangyeolInputController의 IsSecureEventInputEnabled() 분기가 깨졌는지
 //  확인하려면 이런 대역이 필요하다.
 //
 //  사용:  swift Tools/secure-test.swift   → 한글 상태로 abcd 입력
@@ -24,7 +24,7 @@ atexit { DisableSecureEventInput() }
 
 print("""
 
-  ── NavilIME secure input 회귀 테스트 ─────────────────────
+  ── HangyeolIME secure input 회귀 테스트 ─────────────────────
   암호 프롬프트와 같은 조건(secure input ON)을 만들고,
   입력한 내용을 그대로 보여줍니다. 비밀번호는 필요 없습니다.
 

@@ -1,6 +1,6 @@
 //
 //  ComposeBypass.swift
-//  NavilIME
+//  HangyeolIME
 //
 //  특정 키 패턴 직후의 키는 한글로 조합하지 않고 그대로 흘려보낸다.
 //

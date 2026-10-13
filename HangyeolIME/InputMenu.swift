@@ -1,6 +1,6 @@
 //
 //  InputMenu.swift
-//  NavilIME
+//  HangyeolIME
 //
 //  메뉴 막대 입력기 메뉴. IMK가 menu()로 가져가 그린다.
 //
@@ -28,7 +28,7 @@ final class InputMenu {
     private var pauseReason: String?
 
     private init() {
-        permissionItem.action = #selector(NavilIMEInputController.showPermissionWindow(_:))
+        permissionItem.action = #selector(HangyeolInputController.showPermissionWindow(_:))
         menu.addItem(permissionItem)
         menu.autoenablesItems = true
         refresh()
