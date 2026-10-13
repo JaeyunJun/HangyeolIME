@@ -4,7 +4,25 @@
 
 나빌 입력기는 원작자가 세벌식 318Na 자판을 직접 디자인하고, 리눅스/윈도우/맥에서 쓸 수 있도록 입력기를 직접 구현한 프로젝트입니다. 나는 세벌식을 쓰지 못하지만 macOS 기본 한글 입력기의 불안정함이 싫어서, 이 가볍고 깔끔한 입력기를 두벌식 전용으로 커스터마이징해서 쓰고 있습니다.
 
-## 원본 대비 변경 사항
+## 설치
+
+macOS 13.5 이상. 배포용 바이너리는 없고 소스에서 빌드해 설치합니다(Xcode 필요, Apple 계정 불필요).
+
+```
+git clone https://github.com/JaeyunJun/NavilIMEforMac.git
+cd NavilIMEforMac
+git checkout <버전 태그>    # 예: v9.0.0. 생략하면 개발 중인 main
+Tools/build-ime.sh
+```
+`Tools/build-ime.sh`는 9.0.0-alpha.3부터 있습니다. 그 전 버전은 Xcode에서 직접 빌드해야 합니다.
+
+1. 시스템 설정 → 키보드 → 입력 소스 → **+ → 한국어 → NavilIME**를 추가합니다.
+2. 입력기 메뉴의 "특수키 전역 입력" 항목을 눌러 손쉬운 사용 권한을 허용합니다(특수키 조합용).
+
+버전 목록은 [Releases](https://github.com/JaeyunJun/NavilIMEforMac/releases)에 있습니다.
+pre-release(`-alpha`)는 알려진 문제가 있었거나 아직 검증 중인 버전입니다 — [버전과 릴리스](#버전과-릴리스).
+
+## 기능 (원본 대비)
 
 ### 세벌식 제거, 두벌식 전용
 - 세벌식 318, 390 키보드 코드 전부 삭제
@@ -61,7 +79,7 @@ python `getpass` 등 **에코를 끄고 비밀번호를 읽는 모든 것**이 �
 감지하면 `EnableSecureEventInput()`을 켜므로 그동안 다른 앱의 이벤트 탭도 차단됩니다.
 
 **지금 입력 중인 곳만 봅니다.** 맨 앞 앱 소유의 tty(프로세스 부모를 따라가 그 앱에 닿는 것,
-tmux처럼 어느 앱에도 속하지 않는 것 포함) 중에서, 가장 최근에 키 입력을 받은 tty와 그보다
+맨 앞 앱이 터미널이면 tmux처럼 어느 앱에도 속하지 않는 것 포함) 중에서, 가장 최근에 키 입력을 받은 tty와 그보다
 2초 이내에 입력을 받은 tty만 봅니다. 뒤쪽 탭에 떠 있는 암호 프롬프트나 에코를 끈 채 남은
 tty 때문에 다른 앱의 한글까지 막히지 않습니다.
 
@@ -115,25 +133,36 @@ Raycast처럼 열리면서 입력 소스를 ABC로 바꾸는 앱에 바로 타�
 - 입력 내용은 어디에도 기록되지 않습니다. 로그는 Release에서 컴파일 단계에서 제거되고,
   네트워크 코드도 입력을 파일로 쓰는 경로도 없습니다.
 
-### 안정성 개선
-- force unwrap 제거하여 입력기 크래시 방어
-- 죽은 NSScrollView 로그를 `os_log`로 교체 (Console.app에서 `io.navilera.NavilIME`로 필터)
-- 디버깅 전용 UI 제거
+버전별 변경 내용은 [CHANGELOG.md](CHANGELOG.md)에 있습니다.
 
-### 코드 정리
-- 세벌식 시절 구조 제거: 자판 기반 클래스와 옛한글 자모 정의를 없애고, 두벌식 배치와
-  조합 규칙을 `Hangul/Dubeolsik.swift` 하나로 모았습니다. 자모는 `Hangul/Jamo.swift`.
-- 이름 규칙을 Swift 표준(타입 UpperCamelCase, 나머지 lowerCamelCase)으로 통일하고,
-  파일명을 담긴 타입 이름과 맞췄습니다.
-- 역할별로 나눴습니다: 입력기 본체(`NavilIMEInputController`), 키 위치표(`KeyMap`),
-  입력 세션 상태(`InputSession`), 입력 소스 조회(`InputSource`), 조합 건너뛰기 패턴(`ComposeBypass`),
-  입력기 메뉴(`InputMenu`), 특수키 탭(`SpecialKeyTap`), 터미널 암호 감지(`TTYPasswordWatcher`).
+## 버전과 릴리스
 
-상세 변경 이력은 [CHANGES.md](CHANGES.md)를 참고하세요.
+[유의적 버전](https://semver.org/lang/ko/) `주.부.수`를 씁니다. 원작자의 마지막 버전이 7.0이라 포크는 8부터입니다.
 
-## 빌드 / 설치 (개인용)
+- **주**: 쓰던 방식이 바뀌는 변경(기능 제거, 입력 소스를 다시 추가해야 함 등). 8 = 세벌식 제거, 9 = 내부 한/영 모드 제거·입력 모드 구조
+- **부**: 기능 추가. **수**: 버그 수정만.
 
-### 빌드·설치 (기본)
+릴리스는 작업한 날짜 단위로 냅니다.
+
+1. 새 버전은 먼저 **pre-release** `X.Y.Z-alpha.N`으로 냅니다. 같은 목표 버전에서 다시 고치면 `alpha.N+1`.
+2. 써 보고 문제가 없으면 **같은 커밋**에 정식 `X.Y.Z`를 붙입니다. 정식은 "문제없이 쓴 것"만 받습니다.
+3. 문제가 있던 alpha는 그대로 남기고, 릴리스 노트 맨 위에 **알려진 문제**와 고친 버전을 적습니다.
+4. 정식 버전에서 나중에 문제가 발견되면 태그는 그대로 두고 노트에 알려진 문제를 덧붙인 뒤
+   다음 수 버전으로 고칩니다.
+
+릴리스 노트의 원본은 [CHANGELOG.md](CHANGELOG.md) 한 파일입니다. 버전마다 `## [버전]` 절이 있고,
+그 절이 그대로 GitHub 릴리스 노트가 됩니다. 저장소만 받아도 전체 이력을 볼 수 있고 릴리스 페이지와
+내용이 어긋나지 않습니다. 작업 중인 내용은 `## [Unreleased]`에 쌓았다가 릴리스할 때 버전 절로 옮깁니다.
+
+```
+Tools/release.sh 9.1.0-alpha.1            # 지금 커밋으로 pre-release
+Tools/release.sh 9.1.0 <alpha의 커밋>     # 써 보고 문제없으면 같은 커밋을 정식으로 (CHANGELOG에 9.1.0 절 먼저)
+```
+앱 버전(`MARKETING_VERSION`)은 alpha를 뗀 목표 버전이고, 스크립트가 커밋의 값과 맞는지 확인합니다.
+
+## 개발
+
+### 빌드·설치
 ```
 Tools/build-ime.sh          # Release 빌드 → ~/Library/Input Methods 설치 → 실행 확인
 Tools/build-ime.sh Debug    # 진단용. os_log에 입력 내용이 남으니 평소엔 쓰지 말 것
@@ -143,6 +172,14 @@ Tools/build-ime.sh Debug    # 진단용. os_log에 입력 내용이 남으니 �
 
 처음 한 번은 시스템 설정 → 키보드 → 입력 소스 → + → 한국어에서 NavilIME를 추가하고,
 트레이 메뉴의 권한 상태 창에서 손쉬운 사용 권한을 허용하세요.
+
+### 코드 구조
+- `NavilIMEInputController`: 입력기 본체. 키 → 한글 엔진 → 조합 중/확정 글자 반영
+- `Hangul/`: 한글 엔진(`Hangul`), 자모(`Jamo`), 두벌식 배치·조합 규칙(`Dubeolsik`)
+- `KeyMap`(키 위치표), `ComposeBypass`(조합 건너뛰기 패턴), `InputSource`(입력 소스 조회),
+  `InputSession`(지금 입력 중인 세션, 끊긴 세션 복구)
+- `SpecialKeyTap`(특수키 전역 탭), `TTYPasswordWatcher`(터미널 암호 감지),
+  `InputMenu`(입력기 메뉴), `PermissionWindow`(권한 상태 창), `Log`(Debug 전용 로그)
 
 ### 입력 모드 구조
 Apple 입력기처럼 입력기(`com.navilera.inputmethod.NavilIME`) 아래 입력 모드 하나

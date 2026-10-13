@@ -38,7 +38,8 @@ open -g "$DEST"
 sleep 3
 
 if pgrep -x NavilIME > /dev/null; then
-  echo "설치 완료: $CONFIG — 실행 확인됨"
+  VERSION=$(/usr/libexec/PlistBuddy -c 'Print :CFBundleShortVersionString' "$DEST/Contents/Info.plist")
+  echo "설치 완료: $VERSION ($CONFIG, $(git -C "$ROOT" describe --tags --always --dirty)) — 실행 확인됨"
 else
   echo "새 빌드가 실행되지 않습니다. 직전 설치본으로 되돌립니다."
   rm -rf "$DEST"
