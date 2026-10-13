@@ -44,11 +44,11 @@ final class InputMenu {
     func refreshPermissionState() {
         let tap = SpecialKeyTap.shared
         if !tap.isTrusted {
-            permissionItem.title = "특수키 전역 입력: 권한 없음 ❌ — 허용하기…"
+            permissionItem.title = "특수키 조합: 꺼짐 (선택 기능) — 자세히…"
         } else if !tap.isActive {
-            permissionItem.title = "특수키 전역 입력: 권한 있음, 탭 꺼짐 ⚠️…"
+            permissionItem.title = "특수키 조합: 권한 있음, 탭 꺼짐 ⚠️…"
         } else {
-            permissionItem.title = "특수키 전역 입력: 켜짐 ✓…"
+            permissionItem.title = "특수키 조합: 켜짐 ✓…"
         }
         permissionItem.isEnabled = true
     }

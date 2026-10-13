@@ -1,2 +1,6 @@
+/* 앱 이름. 입력기 메뉴 등이 이 표에서 CFBundleName을 찾으므로, 없으면 키 이름이 그대로 보인다. */
+"CFBundleName" = "한결";
+"CFBundleDisplayName" = "한결";
+
 /* 입력 소스 목록에 보이는 입력 모드 이름. 키는 Info.plist의 입력 모드 ID다. */
 "com.jaeyunjun.inputmethod.HangyeolIME.Dubeolsik" = "한결 두벌식";
