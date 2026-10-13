@@ -1,10 +1,10 @@
 #!/bin/sh
 # GitHub 릴리스를 만든다. 릴리스 노트는 CHANGELOG.md의 "## [버전]" 절이다.
 #
-#   Tools/release.sh 9.1.0-alpha.1          # 지금 커밋(HEAD)에 태그·릴리스
-#   Tools/release.sh 9.1.0 <커밋>           # 지정한 커밋에 (써 보고 문제없던 alpha를 정식으로 올릴 때)
+#   Tools/release.sh 2.1.0-alpha.1          # 지금 커밋(HEAD)에 태그·릴리스
+#   Tools/release.sh 2.1.0 <커밋>           # 지정한 커밋에 (써 보고 문제없던 alpha를 정식으로 올릴 때)
 #
-# 버전에 '-'가 있으면(9.1.0-alpha.1) pre-release, 없으면 정식이자 최신 릴리스가 된다.
+# 버전에 '-'가 있으면(2.1.0-alpha.1) pre-release, 없으면 정식이자 최신 릴리스가 된다.
 # 규칙은 README의 "버전과 릴리스" 참고.
 set -e
 VERSION="$1"
@@ -23,7 +23,7 @@ git fetch -q origin main
 git merge-base --is-ancestor "$SHA" origin/main || { echo "origin/main에 push되지 않은 커밋입니다."; exit 1; }
 
 # 앱 버전(MARKETING_VERSION)은 alpha를 뗀 목표 버전이다. 지정 커밋의 값과 맞는지 본다.
-# 포크 초기 커밋(앱 버전 7.0 그대로)에 소급해 붙일 때만 SKIP_APP_VERSION=1.
+# 앱 버전을 넣기 전 커밋(7.0 그대로)에 소급해 붙일 때만 SKIP_APP_VERSION=1.
 STABLE="${VERSION%%-*}"
 [ "$SKIP_APP_VERSION" = 1 ] || {
 APP_VERSION=$(git show "$SHA:NavilIME.xcodeproj/project.pbxproj" | sed -n 's/.*MARKETING_VERSION = \(.*\);/\1/p' | head -1)

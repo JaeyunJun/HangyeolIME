@@ -11,10 +11,10 @@ macOS 13.5 이상. 배포용 바이너리는 없고 소스에서 빌드해 설�
 ```
 git clone https://github.com/JaeyunJun/NavilIMEforMac.git
 cd NavilIMEforMac
-git checkout <버전 태그>    # 예: v9.0.0. 생략하면 개발 중인 main
+git checkout <버전 태그>    # 예: v2.0.0. 생략하면 개발 중인 main
 Tools/build-ime.sh
 ```
-`Tools/build-ime.sh`는 9.0.0-alpha.3부터 있습니다. 그 전 버전은 Xcode에서 직접 빌드해야 합니다.
+`Tools/build-ime.sh`는 2.0.0-alpha.3부터 있습니다. 그 전 버전은 Xcode에서 직접 빌드해야 합니다.
 
 1. 시스템 설정 → 키보드 → 입력 소스 → **+ → 한국어 → NavilIME**를 추가합니다.
 2. 입력기 메뉴의 "특수키 전역 입력" 항목을 눌러 손쉬운 사용 권한을 허용합니다(특수키 조합용).
@@ -137,9 +137,9 @@ Raycast처럼 열리면서 입력 소스를 ABC로 바꾸는 앱에 바로 타�
 
 ## 버전과 릴리스
 
-[유의적 버전](https://semver.org/lang/ko/) `주.부.수`를 씁니다. 원작자의 마지막 버전이 7.0이라 포크는 8부터입니다.
+[유의적 버전](https://semver.org/lang/ko/) `주.부.수`를 씁니다. 원작자 버전(마지막 7.0)과는 별개인 이 포크만의 번호로, 1부터 셉니다. 포크는 원작자 7.0을 바탕으로 합니다.
 
-- **주**: 쓰던 방식이 바뀌는 변경(기능 제거, 입력 소스를 다시 추가해야 함 등). 8 = 세벌식 제거, 9 = 내부 한/영 모드 제거·입력 모드 구조
+- **주**: 쓰던 방식이 바뀌는 변경(기능 제거, 입력 소스를 다시 추가해야 함 등). 1 = 세벌식 제거, 2 = 내부 한/영 모드 제거·입력 모드 구조
 - **부**: 기능 추가. **수**: 버그 수정만.
 
 릴리스는 작업한 날짜 단위로 냅니다.
@@ -155,8 +155,8 @@ Raycast처럼 열리면서 입력 소스를 ABC로 바꾸는 앱에 바로 타�
 내용이 어긋나지 않습니다. 작업 중인 내용은 `## [Unreleased]`에 쌓았다가 릴리스할 때 버전 절로 옮깁니다.
 
 ```
-Tools/release.sh 9.1.0-alpha.1            # 지금 커밋으로 pre-release
-Tools/release.sh 9.1.0 <alpha의 커밋>     # 써 보고 문제없으면 같은 커밋을 정식으로 (CHANGELOG에 9.1.0 절 먼저)
+Tools/release.sh 2.1.0-alpha.1            # 지금 커밋으로 pre-release
+Tools/release.sh 2.1.0 <alpha의 커밋>     # 써 보고 문제없으면 같은 커밋을 정식으로 (CHANGELOG에 2.1.0 절 먼저)
 ```
 앱 버전(`MARKETING_VERSION`)은 alpha를 뗀 목표 버전이고, 스크립트가 커밋의 값과 맞는지 확인합니다.
 
