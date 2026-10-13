@@ -19,8 +19,11 @@ import Foundation
 final class InputSession {
     static let shared = InputSession()
 
+    // 켜져 있는 컨트롤러들, 마지막이 가장 최근. 하나만 기억하면 순서가 엇갈릴 때 틀린다(실측: Orca가
+    // 켜진 직후 카카오톡이 켜졌다 꺼지자 "켜진 입력창 없음"이 되어 Orca에서 특수키와 복구가 오작동).
+    private struct Entry { weak var controller: HangyeolInputController? }
     private let lock = NSLock()
-    private weak var activeController: HangyeolInputController?
+    private var active: [Entry] = []
 
     private var recoveryArmed = false
     private var deactivatedAt: TimeInterval = 0
@@ -35,25 +38,31 @@ final class InputSession {
     var current: HangyeolInputController? {
         lock.lock()
         defer { lock.unlock() }
-        return activeController
+        return active.last?.controller
     }
 
     // 메인 스레드. activateServer, 그리고 activateServer 없이 handle이 불리는 경우(입력기 프로세스가
     // 새로 뜬 직후)에도 부른다.
     func activated(_ controller: HangyeolInputController) {
-        setCurrent(controller)
+        lock.lock()
+        if active.last?.controller !== controller {
+            active.removeAll { $0.controller == nil || $0.controller === controller }
+            active.append(Entry(controller: controller))
+        }
+        lock.unlock()
         recoveryArmed = false
     }
 
-    // 메인 스레드. 다른 컨트롤러가 이미 활성화됐다면(deactivate가 늦게 오는 경우) 그쪽을 지우지 않는다.
+    // 메인 스레드. 이 컨트롤러만 빼고, 켜진 입력창이 하나도 안 남았을 때만 복구를 준비한다.
     func deactivated(_ controller: HangyeolInputController) {
         lock.lock()
-        if activeController === controller {
-            activeController = nil
-        }
+        active.removeAll { $0.controller == nil || $0.controller === controller }
+        let none = active.isEmpty
         lock.unlock()
-        recoveryArmed = true
-        deactivatedAt = ProcessInfo.processInfo.systemUptime
+        if none {
+            recoveryArmed = true
+            deactivatedAt = ProcessInfo.processInfo.systemUptime
+        }
     }
 
     // 메인 스레드. 탭이 "켜진 입력창 없이 글자 키가 눌림"을 알릴 때.
@@ -71,11 +80,5 @@ final class InputSession {
         DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(50)) {
             InputSource.select(hangyeol)
         }
-    }
-
-    private func setCurrent(_ controller: HangyeolInputController) {
-        lock.lock()
-        activeController = controller
-        lock.unlock()
     }
 }
