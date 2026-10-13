@@ -11,7 +11,7 @@
 
 ### 2026-10-13 - 이름을 한결(HangyeolIME)로
 
-- 원작자 NavilIME와 구분되는 이름으로 바꿨다. 표시 이름 "한결"(영어 "Hangyeol"), 앱·저장소 `HangyeolIME`.
+- 원작자 NavilIME와 구분되는 이름으로 바꿨다. 입력 소스 이름 "한결 두벌식"(영어 "Hangyeol 2-Set"), 앱·저장소 `HangyeolIME`.
 - 번들 ID `com.navilera.inputmethod.NavilIME` → `com.jaeyunjun.inputmethod.HangyeolIME`
   (`navilera`는 원작자 이름이다). 입력 모드 ID, IMK 연결 이름, 로그 subsystem
   (`com.jaeyunjun.HangyeolIME`), 컨트롤러 클래스(`HangyeolInputController`), 서명 인증서
