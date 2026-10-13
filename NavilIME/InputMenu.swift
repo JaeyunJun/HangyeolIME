@@ -1,5 +1,5 @@
 //
-//  HangulMenu.swift
+//  InputMenu.swift
 //  NavilIME
 //
 //  메뉴 막대 입력기 메뉴. IMK가 menu()로 가져가 그린다.
@@ -14,8 +14,8 @@ import Cocoa
 import Carbon
 import IOKit
 
-final class HangulMenu {
-    static let shared = HangulMenu()
+final class InputMenu {
+    static let shared = InputMenu()
 
     let menu = NSMenu()
 

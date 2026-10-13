@@ -9,7 +9,7 @@ import Cocoa
 import InputMethodKit
 
 @main
-class AppDelegate: NSObject, NSApplicationDelegate {
+final class AppDelegate: NSObject, NSApplicationDelegate {
 
     // IMK가 입력 세션을 연결하는 서버. 앱이 사는 동안 붙잡고 있어야 한다.
     private var server: IMKServer?

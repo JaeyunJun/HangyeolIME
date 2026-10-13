@@ -12,7 +12,7 @@
 //    입력기가 조합 중인 글자를 확정하고 그 뒤에 기호를 붙인다(insertSpecial).
 //  - 그 밖(영문 등): 모디파이어를 지우고 문자를 바꿔 넣어 앱으로 흘려보낸다.
 //
-//  모든 키를 보는 자리라, 끊긴 입력 세션을 알아채는 데도 쓴다(InputSource 참조).
+//  모든 키를 보는 자리라, 끊긴 입력 세션을 알아채는 데도 쓴다(InputSession 참조).
 //
 //  동작하려면 App Sandbox가 꺼져 있고 손쉬운 사용(Accessibility) 권한이 있어야 한다.
 //
@@ -122,10 +122,10 @@ final class SpecialKeyTap {
         guard type == .keyDown else { return Unmanaged.passUnretained(event) }
 
         // 입력기가 선택됐는데 켜진 입력창이 없는 상태에서 글자 키가 눌리면 세션이 끊긴 것일 수
-        // 있다. 판단과 복구는 메인 스레드에서 한다. (InputSource 참조)
-        if NavilIMEInputController.active == nil,
+        // 있다. 판단과 복구는 메인 스레드에서 한다. (InputSession 참조)
+        if InputSession.shared.current == nil,
            event.flags.intersection([.maskCommand, .maskControl, .maskAlternate]).isEmpty {
-            DispatchQueue.main.async { InputSource.keyPressedWithoutSession() }
+            DispatchQueue.main.async { InputSession.shared.keyPressedWithoutSession() }
         }
 
         // 조합에 정확히 일치하지 않으면(거의 모든 키) 손대지 않고 즉시 통과한다.
@@ -137,7 +137,7 @@ final class SpecialKeyTap {
         Log.debug("Special key \(keyCode) -> \(combo.output)")
 
         // 한글: 이벤트를 삼키고 입력기에 넘긴다. IMK 클라이언트 호출은 메인 스레드에서 해야 한다.
-        if let controller = NavilIMEInputController.active {
+        if let controller = InputSession.shared.current {
             let output = combo.output
             DispatchQueue.main.async { controller.insertSpecial(output) }
             return nil

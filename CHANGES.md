@@ -6,6 +6,24 @@
 
 원본: [navilera/NavilIMEforMac](https://github.com/navilera/NavilIMEforMac)
 
+## 2026-10-13 - 구조 정리 (동작 변화 없음)
+
+- 입력 세션 상태를 `InputSession` 하나로 모았다: 지금 입력을 받는 컨트롤러(탭 스레드가 읽음,
+  잠금 보호)와 끊긴 세션 복구. 전에는 컨트롤러의 static과 `InputSource`의 static var에 흩어져
+  있었다. `InputSource`는 상태 없는 조회·전환만 한다.
+- 키 위치표를 컨트롤러에서 `KeyMap`으로 뺐다. 컨트롤러의 반복되던 "확정하고 넘기기"는
+  `passThrough`로 묶었다.
+- 이름: `HangulMenu` → `InputMenu`(앱별 한/영 기능을 지운 뒤로 한글과 무관), `Hotfix` →
+  `ComposeBypass`(특정 패턴 뒤 조합 건너뛰기), `check()` → `matches()`. 상속하지 않는
+  `NavilIMEInputController`·`AppDelegate`는 `final`(원작자 코드의 `open` 제거).
+- 주석: 파일 머리말은 무엇·왜·제약만 남기고 변경 이력은 여기로. `///`를 `//`로 통일.
+- `Tools/tty-password-log.py` 삭제: "모든 tty"라는 예전 규칙으로 판단해 지금 입력기와 다른
+  결과를 보였다. 진단은 Debug 빌드 로그로 한다.
+- `Tools/hangul-test.sh` 추가: 고정 문장과 시드 고정 무작위 20만 타의 엔진 출력 해시를 기준과
+  비교한다. 기준은 정리 전 원작자 엔진의 출력이다.
+- 입력기 프로세스가 새로 뜬 직후 `handle`로 들어온 키도 세션 활성화로 본다(전과 같음). 이때
+  끊긴 세션 복구 대기도 함께 풀린다. 키가 입력기에 왔다면 끊긴 게 아니기 때문이다.
+
 ## 2026-10-13 - 암호 프롬프트 감지를 지금 입력 중인 tty로 한정, 일시 중지 이유 표시
 
 - `TTYPasswordWatcher`가 사용자의 모든 tty를 봐서, 뒤쪽 탭의 `sudo` 프롬프트나 에코를 끈 채

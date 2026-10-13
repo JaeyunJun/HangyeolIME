@@ -70,15 +70,6 @@ tty 때문에 다른 앱의 한글까지 막히지 않습니다.
 
 셸 설정은 필요 없습니다. 앱을 빌드해서 설치하면 그대로 동작합니다.
 
-무엇에 반응했는지 추적하려면 `Tools/tty-password-log.py`를 띄워두면 됩니다.
-암호 프롬프트 상태가 생길 때마다 어떤 tty에서 어떤 프로그램 때문인지 남깁니다.
-한글이 갑자기 안 조합되면 이 로그를 보고, `sudo`·`ssh` 같은 게 아니면 오탐입니다.
-
-```sh
-nohup python3 Tools/tty-password-log.py > ~/Library/Logs/NavilIME-tty.log 2>&1 &
-tail -f ~/Library/Logs/NavilIME-tty.log
-```
-
 동작이 깨졌는지 확인할 때는 `swift Tools/secure-test.swift`를 쓰면 됩니다. secure
 input을 켠 채로 에코는 남겨두고 한 줄을 받으므로, 비밀번호 없이 "입력기가 비켜서는가"를
 눈으로 확인할 수 있습니다. 한글 상태로 `abcd`를 쳐서 `[abcd]`가 나오면 정상입니다.
@@ -134,6 +125,9 @@ Raycast처럼 열리면서 입력 소스를 ABC로 바꾸는 앱에 바로 타�
   조합 규칙을 `Hangul/Dubeolsik.swift` 하나로 모았습니다. 자모는 `Hangul/Jamo.swift`.
 - 이름 규칙을 Swift 표준(타입 UpperCamelCase, 나머지 lowerCamelCase)으로 통일하고,
   파일명을 담긴 타입 이름과 맞췄습니다.
+- 역할별로 나눴습니다: 입력기 본체(`NavilIMEInputController`), 키 위치표(`KeyMap`),
+  입력 세션 상태(`InputSession`), 입력 소스 조회(`InputSource`), 조합 건너뛰기 패턴(`ComposeBypass`),
+  입력기 메뉴(`InputMenu`), 특수키 탭(`SpecialKeyTap`), 터미널 암호 감지(`TTYPasswordWatcher`).
 
 상세 변경 이력은 [CHANGES.md](CHANGES.md)를 참고하세요.
 
@@ -149,6 +143,12 @@ Tools/build-ime.sh Debug    # 진단용. os_log에 입력 내용이 남으니 �
 
 처음 한 번은 시스템 설정 → 키보드 → 입력 소스에서 NavilIME를 추가하고, 트레이 메뉴의
 권한 상태 창에서 손쉬운 사용 권한을 허용하세요.
+
+### 한글 엔진 테스트
+```
+Tools/hangul-test.sh    # 고정 문장 + 무작위 20만 타의 엔진 출력이 기준과 같은지 확인
+```
+`NavilIME/Hangul/`을 고친 뒤 돌립니다. 기준 해시는 정리 전 원작자 엔진의 출력입니다.
 
 ### 코드 서명 원칙: 로컬 인증서
 손쉬운 사용 권한은 앱의 코드 서명 신원에 묶입니다. ad-hoc 서명은 바이너리 해시가

@@ -13,13 +13,15 @@
 		CF39BCA728C42D7300CB35AE /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = CF39BCA528C42D7300CB35AE /* MainMenu.xib */; };
 		CF39BCAF28C49BDA00CB35AE /* NavilIMEInputController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF39BCAE28C49BDA00CB35AE /* NavilIMEInputController.swift */; };
 		CF40CD3028EFF6CC000CCB7B /* Dubeolsik.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF40CD2F28EFF6CB000CCB7B /* Dubeolsik.swift */; };
-		CF482862291A21DD0020EC2B /* Hotfix.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF482861291A21DD0020EC2B /* Hotfix.swift */; };
+		CF482862291A21DD0020EC2B /* ComposeBypass.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF482861291A21DD0020EC2B /* ComposeBypass.swift */; };
 		CF6561F928D1AE240085AC8D /* Hangul.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF6561F828D1AE240085AC8D /* Hangul.swift */; };
 		CF6561FD28D1AE590085AC8D /* Jamo.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF6561FC28D1AE590085AC8D /* Jamo.swift */; };
-		CF714A5B28E6C273000CBDEE /* HangulMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF714A5A28E6C273000CBDEE /* HangulMenu.swift */; };
+		CF714A5B28E6C273000CBDEE /* InputMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF714A5A28E6C273000CBDEE /* InputMenu.swift */; };
 		CFA10B01000000000000A002 /* SpecialKeyTap.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFA10B00000000000000A001 /* SpecialKeyTap.swift */; };
 		CFA10B05000000000000A006 /* PermissionWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFA10B04000000000000A005 /* PermissionWindow.swift */; };
 		CFA10B07000000000000A008 /* InputSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFA10B06000000000000A007 /* InputSource.swift */; };
+		CFA10B0B000000000000A00C /* KeyMap.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFA10B0A000000000000A00B /* KeyMap.swift */; };
+		CFA10B09000000000000A00A /* InputSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFA10B08000000000000A009 /* InputSession.swift */; };
 		CFA10B01000000000000BB01 /* TTYPasswordWatcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFA10B00000000000000FF01 /* TTYPasswordWatcher.swift */; };
 		CF8F931D2D718F5300955352 /* navilime.png in Resources */ = {isa = PBXBuildFile; fileRef = CF8F931C2D718F5300955352 /* navilime.png */; };
 /* End PBXBuildFile section */
@@ -34,13 +36,15 @@
 		CF39BCAE28C49BDA00CB35AE /* NavilIMEInputController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavilIMEInputController.swift; sourceTree = "<group>"; };
 		CF39BCB028C49D3800CB35AE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		CF40CD2F28EFF6CB000CCB7B /* Dubeolsik.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Dubeolsik.swift; sourceTree = "<group>"; };
-		CF482861291A21DD0020EC2B /* Hotfix.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Hotfix.swift; sourceTree = "<group>"; };
+		CF482861291A21DD0020EC2B /* ComposeBypass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComposeBypass.swift; sourceTree = "<group>"; };
 		CF6561F828D1AE240085AC8D /* Hangul.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Hangul.swift; sourceTree = "<group>"; };
 		CF6561FC28D1AE590085AC8D /* Jamo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Jamo.swift; sourceTree = "<group>"; };
-		CF714A5A28E6C273000CBDEE /* HangulMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HangulMenu.swift; sourceTree = "<group>"; };
+		CF714A5A28E6C273000CBDEE /* InputMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputMenu.swift; sourceTree = "<group>"; };
 		CFA10B00000000000000A001 /* SpecialKeyTap.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpecialKeyTap.swift; sourceTree = "<group>"; };
 		CFA10B04000000000000A005 /* PermissionWindow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PermissionWindow.swift; sourceTree = "<group>"; };
 		CFA10B06000000000000A007 /* InputSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputSource.swift; sourceTree = "<group>"; };
+		CFA10B0A000000000000A00B /* KeyMap.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyMap.swift; sourceTree = "<group>"; };
+		CFA10B08000000000000A009 /* InputSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputSession.swift; sourceTree = "<group>"; };
 		CFA10B00000000000000FF01 /* TTYPasswordWatcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TTYPasswordWatcher.swift; sourceTree = "<group>"; };
 		CFA10B02000000000000A003 /* Signing.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Signing.xcconfig; sourceTree = "<group>"; };
 		CFA10B03000000000000A004 /* Local.xcconfig.example */ = {isa = PBXFileReference; lastKnownFileType = text; path = Local.xcconfig.example; sourceTree = "<group>"; };
@@ -82,12 +86,14 @@
 				CF39BCA128C42D7200CB35AE /* AppDelegate.swift */,
 				CF39BCAE28C49BDA00CB35AE /* NavilIMEInputController.swift */,
 				CF3237BC28D1AACE008941FE /* Log.swift */,
-				CF714A5A28E6C273000CBDEE /* HangulMenu.swift */,
+				CF714A5A28E6C273000CBDEE /* InputMenu.swift */,
 				CFA10B00000000000000A001 /* SpecialKeyTap.swift */,
 				CFA10B04000000000000A005 /* PermissionWindow.swift */,
 				CFA10B06000000000000A007 /* InputSource.swift */,
+				CFA10B0A000000000000A00B /* KeyMap.swift */,
+				CFA10B08000000000000A009 /* InputSession.swift */,
 				CFA10B00000000000000FF01 /* TTYPasswordWatcher.swift */,
-				CF482861291A21DD0020EC2B /* Hotfix.swift */,
+				CF482861291A21DD0020EC2B /* ComposeBypass.swift */,
 				CF39BCA328C42D7300CB35AE /* Assets.xcassets */,
 				CF39BCA528C42D7300CB35AE /* MainMenu.xib */,
 				CF39BCA828C42D7300CB35AE /* NavilIME.entitlements */,
@@ -183,12 +189,14 @@
 				CF6561FD28D1AE590085AC8D /* Jamo.swift in Sources */,
 				CF39BCA228C42D7200CB35AE /* AppDelegate.swift in Sources */,
 				CF3237BD28D1AACE008941FE /* Log.swift in Sources */,
-				CF482862291A21DD0020EC2B /* Hotfix.swift in Sources */,
+				CF482862291A21DD0020EC2B /* ComposeBypass.swift in Sources */,
 				CF6561F928D1AE240085AC8D /* Hangul.swift in Sources */,
-				CF714A5B28E6C273000CBDEE /* HangulMenu.swift in Sources */,
+				CF714A5B28E6C273000CBDEE /* InputMenu.swift in Sources */,
 				CFA10B01000000000000A002 /* SpecialKeyTap.swift in Sources */,
 				CFA10B05000000000000A006 /* PermissionWindow.swift in Sources */,
 				CFA10B07000000000000A008 /* InputSource.swift in Sources */,
+				CFA10B0B000000000000A00C /* KeyMap.swift in Sources */,
+				CFA10B09000000000000A00A /* InputSession.swift in Sources */,
 				CFA10B01000000000000BB01 /* TTYPasswordWatcher.swift in Sources */,
 				CF39BCAF28C49BDA00CB35AE /* NavilIMEInputController.swift in Sources */,
 			);

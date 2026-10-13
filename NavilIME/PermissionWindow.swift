@@ -2,15 +2,9 @@
 //  PermissionWindow.swift
 //  NavilIME
 //
-//  특수키 전역 입력(손쉬운 사용) 권한 상태 창.
-//
-//  메뉴 항목만으로는 "실제로 권한이 잡혔는지"를 알기 어렵다. 특히 ad-hoc 서명은 재빌드마다
-//  서명이 바뀌어, 시스템 설정 목록엔 NavilIME가 켜져 있어도 실제로는 권한이 없는 상태가 된다.
-//  그래서 이 창은 시스템 설정의 표시가 아니라 프로세스가 실제로 받은 권한(AXIsProcessTrusted)과
-//  탭이 실제로 돌고 있는지를 보여준다.
-//
-//  창이 떠 있는 동안 1초마다 다시 조회하므로, 시스템 설정에서 켜고 돌아오면 바로 갱신된다.
-//  권한이 잡히는 순간 탭도 켠다.
+//  특수키 전역 입력(손쉬운 사용) 권한 상태 창. 시스템 설정 목록의 표시가 아니라 프로세스가
+//  실제로 받은 권한(AXIsProcessTrusted)과 탭이 실제로 도는지를 보여준다(서명이 바뀌면 둘이
+//  어긋난다). 떠 있는 동안 1초마다 다시 조회하고, 권한이 잡히는 순간 탭을 켠다.
 //
 
 import Cocoa
@@ -112,7 +106,7 @@ final class PermissionWindow: NSObject, NSWindowDelegate {
                 + "한글·영문 어느 입력 소스에서든 동작합니다."
             openButton.isEnabled = false
         }
-        HangulMenu.shared.refreshPermissionState()
+        InputMenu.shared.refreshPermissionState()
     }
 
     @objc private func openSettings() {

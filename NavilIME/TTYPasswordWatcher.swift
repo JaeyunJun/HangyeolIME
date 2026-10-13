@@ -2,42 +2,21 @@
 //  TTYPasswordWatcher.swift
 //  NavilIME
 //
-//  터미널의 암호 프롬프트를 감지해, 그동안 입력기가 조합을 멈추게 한다.
+//  터미널 암호 프롬프트(sudo, ssh, git 자격증명 등)를 감지해 그동안 한글 조합을 멈춘다.
+//  macOS는 암호 필드에서는 secure input을 켜 주지만 터미널 프롬프트에서는 켜 주지 않는다.
 //
-//  왜 필요한가: macOS는 암호 필드(잠금 화면, 키체인 등)에서 secure input을 켜주지만,
-//  터미널의 sudo/ssh/git 프롬프트에서는 켜주지 않는다. 터미널 앱이 pty의 상태를
-//  보지 않기 때문이다. 그래서 한글 상태로 비밀번호를 치면 한글이 들어간다.
+//  판별: 암호를 읽는 프로그램은 tty를 "정규 모드(ICANON) + 에코 끔"으로 만든다.
+//  vim·top 같은 TUI는 raw 모드라 구분된다.
 //
-//  판별법: 비밀번호를 읽는 프로그램은 tty를 "정규 모드(ICANON) + 에코 끔(ECHO off)"
-//  으로 만든다. vim·top 같은 전체화면 TUI는 raw 모드(ICANON off)라 구분된다.
-//  실측으로 확인했다:
+//  범위: 지금 입력 중인 tty만 본다. 맨 앞 앱 소유의 tty(프로세스 부모를 따라 그 앱에 닿는 것,
+//  tmux 서버처럼 어느 앱에도 속하지 않는 것 포함) 중 가장 최근에 키 입력을 받은 tty(접근 시각,
+//  `w`의 유휴 시간과 같은 값)와 그보다 recentWindow 이내에 입력을 받은 tty. 뒤쪽 탭의 프롬프트가
+//  다른 앱의 한글까지 막지 않게 하기 위해서다.
 //
-//      cat      정규 + 에코 on    → 평범한 입력
-//      getpass  정규 + 에코 OFF   → 암호 프롬프트   ← 이것만 잡는다
-//      vi       raw  + 에코 OFF   → TUI (오탐 아님)
-//      top      raw  + 에코 OFF   → TUI (오탐 아님)
+//  감지하면 EnableSecureEventInput()을 켠다. 다른 앱의 이벤트 탭도 차단되어 키로거 방어가 된다.
 //
-//  덕분에 sudo뿐 아니라 ssh, git 자격증명, passwd, su, python getpass 등
-//  "에코를 끄고 비밀번호를 읽는 모든 것"이 한 번에 커버된다.
-//
-//  [어느 tty를 보나] 지금 사용자가 입력하고 있는 곳만 본다. 예전에는 모든 tty를 봐서,
-//  뒤쪽 탭에 떠 있는 암호 프롬프트나 에코를 끈 채 남은 tty 하나 때문에 모든 앱에서
-//  한글이 막혔다. 지금은:
-//    1. 맨 앞 앱 소유의 tty만 본다. 프로세스 부모를 따라가 그 앱에 닿는 tty다.
-//       tmux 서버처럼 어느 앱에도 속하지 않는 tty도 같이 본다(맨 앞 터미널 안에서
-//       돌고 있을 수 있으므로).
-//    2. 그중 가장 최근에 키 입력을 받은 tty(접근 시각, `w`의 유휴 시간과 같은 값)와,
-//       그보다 recentWindow 이내에 입력을 받은 tty만 본다. tmux는 바깥 tty와 안쪽 tty가
-//       거의 동시에 입력을 받으므로 둘 다 잡힌다. 오래 손대지 않은 뒤쪽 탭은 빠진다.
-//
-//  감지하면 EnableSecureEventInput()을 켠다. 조합을 멈추는 것은 물론, 그동안
-//  다른 앱의 이벤트 탭까지 차단되어 실제 키로거 방어가 된다.
-//
-//  [스레딩] 타이머도 조회도 전부 메인 큐에서 돈다. IMK 입력 경로가 메인 스레드이므로
-//  락 없이 안전하다.
-//
-//  [비용] tty 소유 관계(프로세스 전체 조회)는 1초마다 다시 만든다(실측 ~1.3ms). 키 입력 경로는
-//  100ms TTL 캐시로 확인하고, 프로세스가 붙어 있는 tty만 stat한 뒤 후보 1~2개만 연다.
+//  [스레드] 타이머와 조회 모두 메인 큐. IMK 입력 경로도 메인이라 잠금이 필요 없다.
+//  [비용] 소유 관계 갱신 ~1.3ms(1초마다), 확인 1회 ~0.45ms. 키 입력 경로는 100ms 캐시.
 //
 
 import Cocoa
@@ -87,8 +66,8 @@ final class TTYPasswordWatcher {
         setSecureInput(false)
     }
 
-    /// 키 입력 경로에서 부르는 동기 확인. 캐시가 오래됐으면 즉시 다시 훑는다.
-    /// (타이머 주기를 기다리면 프롬프트 직후 첫 글자를 놓칠 수 있다.)
+    // 키 입력 경로에서 부르는 동기 확인. 캐시가 오래됐으면 즉시 다시 훑는다.
+    // (타이머 주기를 기다리면 프롬프트 직후 첫 글자를 놓칠 수 있다.)
     func isPasswordPromptActive() -> Bool {
         let elapsed = DispatchTime.now().uptimeNanoseconds &- cachedAt.uptimeNanoseconds
         if elapsed < Self.cacheTTL {
@@ -120,7 +99,7 @@ final class TTYPasswordWatcher {
         }
     }
 
-    /// 지금 입력 중인 tty(맨 앞 앱 소유 + 최근 입력)가 "정규 모드 + 에코 꺼짐"인가.
+    // 지금 입력 중인 tty(맨 앞 앱 소유 + 최근 입력)가 "정규 모드 + 에코 꺼짐"인가.
     private func frontTTYAwaitingPassword() -> Bool {
         guard let front = NSWorkspace.shared.frontmostApplication?.processIdentifier else { return false }
         rebuildOwnersIfStale()

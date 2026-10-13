@@ -1,5 +1,5 @@
 //
-//  Hotfix.swift
+//  ComposeBypass.swift
 //  NavilIME
 //
 //  특정 키 패턴 직후의 키는 한글로 조합하지 않고 그대로 흘려보낸다.
@@ -7,8 +7,8 @@
 
 import Foundation
 
-final class Hotfix {
-    static let shared = Hotfix()
+final class ComposeBypass {
+    static let shared = ComposeBypass()
 
     // keycode 패턴. 마지막 키가 들어온 순간 패턴이 완성되면 그 키를 영문으로 둔다.
     private let patterns: [[UInt16]] = [
@@ -30,7 +30,7 @@ final class Hotfix {
     }
 
     // 최근 키가 패턴과 일치하면 true. 일치한 키들은 기록에서 지워 같은 키로 다시 걸리지 않게 한다.
-    func check() -> Bool {
+    func matches() -> Bool {
         for pattern in patterns where history.suffix(pattern.count).elementsEqual(pattern) {
             history.removeLast(pattern.count)
             return true
