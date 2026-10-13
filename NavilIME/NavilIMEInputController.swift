@@ -250,7 +250,7 @@ open class NavilIMEInputController: IMKInputController {
     override open func menu() -> NSMenu! {
         // 권한이 방금 허용됐다면 탭을 켜고, 메뉴 표시 상태도 갱신한다.
         SpecialKeyTap.shared.startIfTrusted()
-        HangulMenu.shared.refreshPermissionState()
+        HangulMenu.shared.refresh()
         return HangulMenu.shared.menu
     }
 
