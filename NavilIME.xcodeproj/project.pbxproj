@@ -23,7 +23,7 @@
 		CFA10B0B000000000000A00C /* KeyMap.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFA10B0A000000000000A00B /* KeyMap.swift */; };
 		CFA10B09000000000000A00A /* InputSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFA10B08000000000000A009 /* InputSession.swift */; };
 		CFA10B01000000000000BB01 /* TTYPasswordWatcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFA10B00000000000000FF01 /* TTYPasswordWatcher.swift */; };
-		CF8F931D2D718F5300955352 /* navilime.png in Resources */ = {isa = PBXBuildFile; fileRef = CF8F931C2D718F5300955352 /* navilime.png */; };
+		CF8F931D2D718F5300955352 /* navilime.tiff in Resources */ = {isa = PBXBuildFile; fileRef = CF8F931C2D718F5300955352 /* navilime.tiff */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -48,7 +48,7 @@
 		CFA10B00000000000000FF01 /* TTYPasswordWatcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TTYPasswordWatcher.swift; sourceTree = "<group>"; };
 		CFA10B02000000000000A003 /* Signing.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Signing.xcconfig; sourceTree = "<group>"; };
 		CFA10B03000000000000A004 /* Local.xcconfig.example */ = {isa = PBXFileReference; lastKnownFileType = text; path = Local.xcconfig.example; sourceTree = "<group>"; };
-		CF8F931C2D718F5300955352 /* navilime.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = navilime.png; sourceTree = "<group>"; };
+		CF8F931C2D718F5300955352 /* navilime.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = navilime.tiff; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -99,7 +99,7 @@
 				CF39BCA828C42D7300CB35AE /* NavilIME.entitlements */,
 				CFA10B02000000000000A003 /* Signing.xcconfig */,
 				CFA10B03000000000000A004 /* Local.xcconfig.example */,
-				CF8F931C2D718F5300955352 /* navilime.png */,
+				CF8F931C2D718F5300955352 /* navilime.tiff */,
 			);
 			path = NavilIME;
 			sourceTree = "<group>";
@@ -172,7 +172,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				CF8F931D2D718F5300955352 /* navilime.png in Resources */,
+				CF8F931D2D718F5300955352 /* navilime.tiff in Resources */,
 				CF39BCA428C42D7300CB35AE /* Assets.xcassets in Resources */,
 				CF39BCA728C42D7300CB35AE /* MainMenu.xib in Resources */,
 			);

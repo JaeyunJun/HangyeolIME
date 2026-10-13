@@ -144,6 +144,13 @@ Tools/build-ime.sh Debug    # 진단용. os_log에 입력 내용이 남으니 �
 처음 한 번은 시스템 설정 → 키보드 → 입력 소스에서 NavilIME를 추가하고, 트레이 메뉴의
 권한 상태 창에서 손쉬운 사용 권한을 허용하세요.
 
+### 입력기 아이콘
+메뉴 막대·입력 위치 표시에는 `Info.plist`의 `TISIconLabels`(Primary = "가")를 macOS가 직접
+그립니다. Apple 한국어 입력기가 쓰는 방식입니다. 그림 아이콘(`navilime.tiff`, 투명 배경의 '가'
+템플릿 이미지, `TISIconIsTemplate`)은 그 밖의 자리용이며 `swift Tools/make-icon.swift
+NavilIME/navilime.tiff`로 다시 만듭니다. 바꾼 뒤에는 macOS 아이콘 캐시 때문에 입력 소스를
+바꿨다 오거나 다시 로그인해야 보일 수 있습니다.
+
 ### 한글 엔진 테스트
 ```
 Tools/hangul-test.sh    # 고정 문장 + 무작위 20만 타의 엔진 출력이 기준과 같은지 확인

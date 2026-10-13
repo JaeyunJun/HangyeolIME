@@ -16,7 +16,9 @@
 //  감지하면 EnableSecureEventInput()을 켠다. 다른 앱의 이벤트 탭도 차단되어 키로거 방어가 된다.
 //
 //  [스레드] 타이머와 조회 모두 메인 큐. IMK 입력 경로도 메인이라 잠금이 필요 없다.
-//  [비용] 소유 관계 갱신 ~1.3ms(1초마다), 확인 1회 ~0.45ms. 키 입력 경로는 100ms 캐시.
+//  [비용] 대기 중 입력기 전체 CPU 약 0.2%(실측). 확인 1회 ~0.5ms(대부분 후보 tty를 여는 비용),
+//  소유 관계는 1초마다 다시 만든다. 키 입력 경로는 100ms 캐시. NSRunningApplication의 속성은
+//  읽을 때마다 LaunchServices에 XPC로 묻고 devname()은 /dev 전체를 훑으므로 둘 다 매번 쓰지 않는다.
 //
 
 import Cocoa
@@ -40,9 +42,18 @@ final class TTYPasswordWatcher {
     // 조합 차단 자체는 키 입력 경로가 즉시 처리하므로, 이 타이머는 느려도 된다.
     private static let pollInterval: DispatchTimeInterval = .seconds(1)
 
-    // tty 경로 → 그 tty를 쓰는 프로세스가 속한 앱의 pid. 어느 앱에도 속하지 않으면 nil(tmux 서버 등).
-    // 목록에 없는 tty는 아직 모르는 것이라 보지 않는다(다음 갱신 때 들어온다).
-    private var ttyOwners: [String: pid_t?] = [:]
+    // tty 경로 → 그 tty를 쓰는 프로세스의 조상 pid들. 어느 앱에도 속하지 않으면(tmux 서버 등)
+    // orphan. 목록에 없는 tty는 아직 모르는 것이라 보지 않는다(다음 갱신 때 들어온다).
+    private struct TTYOwnership {
+        let ancestors: Set<pid_t>
+        let orphan: Bool
+    }
+    private var ttyOwners: [String: TTYOwnership] = [:]
+
+    // 실행 중인 앱의 pid. 시작할 때 한 번 받고 이후로는 앱 실행·종료 알림으로만 고친다.
+    // runningApplications를 매번 부르면 앱마다 LaunchServices에 XPC로 물어(pid를 읽기만 해도)
+    // 1초마다 ~15ms가 들었다(실측).
+    private var appPIDs: Set<pid_t> = []
     private var ownersBuiltAt = DispatchTime(uptimeNanoseconds: 0)
     private static let ownersTTL: UInt64 = 1_000_000_000  // 1s
 
@@ -53,6 +64,20 @@ final class TTYPasswordWatcher {
 
     func start() {
         guard timer == nil else { return }
+        let workspace = NSWorkspace.shared
+        appPIDs = Set(workspace.runningApplications.map(\.processIdentifier))
+        let center = workspace.notificationCenter
+        center.addObserver(forName: NSWorkspace.didLaunchApplicationNotification, object: nil, queue: .main) { [weak self] note in
+            if let app = note.userInfo?[NSWorkspace.applicationUserInfoKey] as? NSRunningApplication {
+                self?.appPIDs.insert(app.processIdentifier)
+            }
+        }
+        center.addObserver(forName: NSWorkspace.didTerminateApplicationNotification, object: nil, queue: .main) { [weak self] note in
+            if let app = note.userInfo?[NSWorkspace.applicationUserInfoKey] as? NSRunningApplication {
+                self?.appPIDs.remove(app.processIdentifier)
+            }
+        }
+
         let t = DispatchSource.makeTimerSource(queue: .main)
         t.schedule(deadline: .now(), repeating: Self.pollInterval)
         t.setEventHandler { [weak self] in self?.refresh() }
@@ -106,7 +131,7 @@ final class TTYPasswordWatcher {
 
         let uid = getuid()
         var candidates: [(path: String, lastInput: TimeInterval)] = []
-        for (path, owner) in ttyOwners where owner == nil || owner == front {
+        for (path, owner) in ttyOwners where owner.orphan || owner.ancestors.contains(front) {
             var info = stat()
             guard stat(path, &info) == 0, info.st_uid == uid else { continue }
             let t = info.st_atimespec
@@ -142,10 +167,8 @@ final class TTYPasswordWatcher {
         guard now.uptimeNanoseconds &- ownersBuiltAt.uptimeNanoseconds >= Self.ownersTTL else { return }
         ownersBuiltAt = now
 
-        let appPIDs = Set(NSWorkspace.shared.runningApplications
-            .filter { $0.activationPolicy == .regular }
-            .map(\.processIdentifier))
-
+        // "조상 중에 맨 앞 앱이 있나"로 판단하므로, Electron 도우미(Orca Helper 등)처럼 앱으로
+        // 잡히는 중간 프로세스가 끼어도 상관없다.
         var parent: [pid_t: pid_t] = [:]
         var processOnTTY: [dev_t: pid_t] = [:]
         for p in Self.allProcesses() {
@@ -156,23 +179,36 @@ final class TTYPasswordWatcher {
             }
         }
 
-        var owners: [String: pid_t?] = [:]
+        let paths = Self.ttyPaths()
+        var owners: [String: TTYOwnership] = [:]
         for (tty, pid) in processOnTTY {
-            var owner: pid_t? = nil
+            guard let path = paths[tty] else { continue }
+            var ancestors: Set<pid_t> = []
             var cur = pid
-            // 부모를 따라 올라가다 처음 만나는 앱이 소유자다. 순환 방지로 깊이를 제한한다.
+            // 순환 방지로 깊이를 제한한다.
             for _ in 0..<32 {
                 guard let up = parent[cur], up > 1 else { break }
-                if appPIDs.contains(up) {
-                    owner = up
-                    break
-                }
+                ancestors.insert(up)
                 cur = up
             }
-            guard let name = devname(tty, S_IFCHR) else { continue }
-            owners["/dev/" + String(cString: name)] = .some(owner)
+            owners[path] = TTYOwnership(ancestors: ancestors, orphan: ancestors.isDisjoint(with: appPIDs))
         }
         ttyOwners = owners
+    }
+
+    // tty 장치 번호 → 경로. devname()은 부를 때마다 /dev 전체를 lstat해서(실측) 쓰지 않고,
+    // /dev 목록을 한 번 읽어 ttys*만 stat한다.
+    private static func ttyPaths() -> [dev_t: String] {
+        guard let names = try? FileManager.default.contentsOfDirectory(atPath: "/dev") else { return [:] }
+        var paths: [dev_t: String] = [:]
+        for name in names where name.hasPrefix("ttys") {
+            let path = "/dev/" + name
+            var info = stat()
+            if stat(path, &info) == 0 {
+                paths[info.st_rdev] = path
+            }
+        }
+        return paths
     }
 
     private static func allProcesses() -> [kinfo_proc] {

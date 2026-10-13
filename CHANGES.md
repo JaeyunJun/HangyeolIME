@@ -6,6 +6,19 @@
 
 원본: [navilera/NavilIMEforMac](https://github.com/navilera/NavilIMEforMac)
 
+## 2026-10-13 - 대기 중 CPU 낭비 제거, '가' 아이콘
+
+- `TTYPasswordWatcher`가 입력기가 가만히 있을 때도 CPU를 약 2~3% 쓰고 있었다(`sample`로 확인).
+  1초마다 소유 관계를 다시 만들며 (1) `devname()`이 호출마다 `/dev` 전체를 `lstat`했고,
+  (2) 앱마다 `activationPolicy`, (3) pid만 읽어도 `NSRunningApplication`이 LaunchServices에 XPC로
+  물었다. `/dev` 목록은 한 번만 읽고, 앱 pid는 시작할 때 한 번 받은 뒤 앱 실행·종료 알림으로만
+  고친다. 대기 중 CPU 약 0.2%(실측).
+- tty 소유 판단을 "가장 가까운 앱"에서 "조상 중에 맨 앞 앱이 있나"로 바꿨다. 앱 종류를 묻지
+  않으면 Electron 도우미(Orca Helper)도 앱으로 잡혀, 가까운 앱 기준으로는 Orca 탭을 놓쳤다.
+- 아이콘: 네모 박스 안 '나'(36px PNG) → 투명 배경의 '가' 템플릿 이미지(16pt @1x·@2x TIFF,
+  `TISIconIsTemplate`)와 `TISIconLabels`(Primary = "가"). macOS가 다크·라이트 모드에 맞춰
+  그린다. `Tools/make-icon.swift`로 다시 만든다.
+
 ## 2026-10-13 - 구조 정리 (동작 변화 없음)
 
 - 입력 세션 상태를 `InputSession` 하나로 모았다: 지금 입력을 받는 컨트롤러(탭 스레드가 읽음,
