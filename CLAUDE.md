@@ -1,6 +1,6 @@
 # 한결 (HangyeolIME) — 작업 규칙
 
-NavilIME for Mac(Manwoo Yi, GPLv3)에서 출발한 독립 저장소. 원작자 크레딧과 GPLv3는 유지한다.
+NavilIME for Mac(Manwoo Yi, GPLv3)의 포크. 원작자 크레딧과 GPLv3는 유지한다.
 
 ## 빌드·설치
 - 빌드해서 쓸 때는 항상 `Tools/build-ime.sh` (Release) 를 쓴다. 진단이 필요할 때만 `Tools/build-ime.sh Debug`.

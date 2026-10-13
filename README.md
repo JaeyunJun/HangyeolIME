@@ -1,6 +1,6 @@
 # 한결 (HangyeolIME)
 
-한결은 **Manwoo Yi**([@navilera](https://github.com/navilera))님의 [NavilIME for Mac](https://github.com/navilera/NavilIMEforMac)에서 출발해 독립적으로 발전한 macOS 두벌식 입력기입니다. 원작의 GPLv3를 따르며, 원작에서 이어진 전체 커밋 이력을 그대로 담고 있습니다.
+한결은 **Manwoo Yi**([@navilera](https://github.com/navilera))님의 [NavilIME for Mac](https://github.com/navilera/NavilIMEforMac)에서 출발한 포크로, 두벌식 전용으로 다시 다듬은 macOS 입력기입니다. 원작의 GPLv3를 따릅니다.
 
 나빌 입력기는 원작자가 세벌식 318Na 자판을 직접 디자인하고, 리눅스/윈도우/맥에서 쓸 수 있도록 입력기를 직접 구현한 프로젝트입니다. 나는 세벌식을 쓰지 못하지만 macOS 기본 한글 입력기의 불안정함이 싫어서, 이 가볍고 깔끔한 입력기를 두벌식 전용으로 커스터마이징해서 쓰고 있습니다.
 
