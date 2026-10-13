@@ -6,7 +6,11 @@
 
 ## 설치
 
-macOS 13.5 이상. 배포용 바이너리는 없고 소스에서 빌드해 설치합니다(Xcode 필요, Apple 계정 불필요).
+> **지금은 직접 빌드해서 쓰는 분을 위한 저장소입니다.** 내려받아 바로 설치하는 앱은 아직 없습니다.
+> 개인 Apple 개발자 계정을 마련하면, Apple 서명·공증을 받은 설치 파일을 릴리스로 제공할 계획입니다.
+
+macOS 13.5 이상, Xcode가 필요합니다(Apple 계정은 필요 없음). 서명은 빌드 스크립트가 이 Mac 전용
+자체 서명 인증서를 만들어 처리하므로, 빌드한 앱은 그 Mac에서만 씁니다.
 
 ```
 git clone https://github.com/JaeyunJun/HangyeolIME.git
@@ -16,11 +20,11 @@ Tools/build-ime.sh
 ```
 `Tools/build-ime.sh`는 2.0.0-alpha.3부터 있습니다. 그 전 버전은 Xcode에서 직접 빌드해야 합니다.
 
-1. 시스템 설정 → 키보드 → 입력 소스 → **+ → 한국어 → 한결**을 추가합니다.
+1. 시스템 설정 → 키보드 → 입력 소스 → **+ → 한국어 → 한결 두벌식**을 추가합니다.
 2. (선택) 아래 특수키 조합을 쓰려면 입력기 메뉴의 "특수키 조합" 항목에서 손쉬운 사용 권한을 허용합니다.
    한글 입력에는 필요 없습니다.
 
-버전 목록은 [Releases](https://github.com/JaeyunJun/HangyeolIME/releases)에 있습니다.
+버전 목록은 [Releases](https://github.com/JaeyunJun/HangyeolIME/releases)에 있습니다(지금은 소스와 변경 내용만).
 pre-release(`-alpha`)는 알려진 문제가 있었거나 아직 검증 중인 버전입니다 — [버전과 릴리스](#버전과-릴리스).
 
 ## 기능 (원본 대비)
