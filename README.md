@@ -47,17 +47,9 @@ Tools/build-ime.sh
 
 빌드 스크립트가 이 Mac 전용 서명 인증서를 만들어 서명하므로, 빌드한 앱은 그 Mac에서만 씁니다.
 
-## 버전
+## 문제 제보
 
-[Releases](https://github.com/JaeyunJun/HangyeolIME/releases)에 버전별 변경 내용이 있습니다(지금은 소스만).
-새 버전은 먼저 pre-release(`-alpha`)로 내고, 써 보고 문제가 없으면 정식 번호를 붙입니다.
-특정 버전은 `git checkout v<버전>` 뒤 빌드하면 됩니다. 전체 이력은 [CHANGELOG.md](CHANGELOG.md).
+[Issues](https://github.com/JaeyunJun/HangyeolIME/issues)에 남겨 주세요. macOS 버전, 어느 앱에서
+무엇을 쳤을 때 어떻게 나왔는지(기대한 결과와 실제 결과)를 적어 주시면 재현이 빠릅니다.
 
-## 문제가 생기면
-
-- **메뉴 막대는 한글인데 영문이 나온다**: 입력기 메뉴를 열어 보세요. 암호 입력 중이라 멈춘 것이면
-  맨 위에 이유가 나옵니다. 다른 앱이 보안 입력을 켜 둔 채 잊은 경우에는 화면을 잠갔다 풀면 풀립니다.
-- **특수키 권한을 줬는데 꺼짐으로 나온다**: 재빌드로 서명이 바뀐 경우입니다. 손쉬운 사용 목록에서
-  한결을 −로 지우고 다시 허용하세요.
-
-개발·빌드 구조·릴리스 방법은 [DEVELOPMENT.md](DEVELOPMENT.md)에 있습니다.
+빌드·코드 구조는 [DEVELOPMENT.md](DEVELOPMENT.md), 변경 이력은 [CHANGELOG.md](CHANGELOG.md)에 있습니다.
