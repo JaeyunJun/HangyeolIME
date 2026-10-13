@@ -12,6 +12,7 @@ CONFIG="${1:-Release}"
 ROOT=$(cd "$(dirname "$0")/.." && pwd)
 DEST="$HOME/Library/Input Methods/HangyeolIME.app"
 WORK=$(mktemp -d)
+LSREGISTER=/System/Library/Frameworks/CoreServices.framework/Frameworks/LaunchServices.framework/Support/lsregister
 trap 'rm -rf "$WORK"' EXIT
 
 "$ROOT/Tools/setup-signing.sh"
@@ -32,6 +33,10 @@ if [ -d "$DEST" ]; then
 fi
 rm -rf "$DEST"
 ditto "$APP" "$DEST"
+# xcodebuild가 임시 폴더의 빌드 결과를 LaunchServices에 등록해 둔다. 그대로 두면 지워진 경로의
+# 옛 등록이 남아, 번들 ID를 바꿨을 때 입력 소스가 옛 ID로 묶여 선택되지 않았다(실측).
+"$LSREGISTER" -u "$APP" 2>/dev/null || true
+"$LSREGISTER" -f "$DEST"
 pkill -x HangyeolIME || true
 sleep 0.5
 open -g "$DEST"
