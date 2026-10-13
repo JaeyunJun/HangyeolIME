@@ -2,8 +2,11 @@
 //  PermissionWindow.swift
 //  HangyeolIME
 //
-//  특수키 조합(선택 기능)의 손쉬운 사용 권한 창. 왜 필요한지 설명하고, 버튼 하나로 macOS 권한
-//  요청을 띄운다. 시스템 설정 목록의 표시가 아니라 프로세스가 실제로 받은 권한(AXIsProcessTrusted)과
+//  한결 상태 창(입력기 메뉴의 유일한 항목). 위에는 한글 조합을 일부러 멈춘 이유(터미널 암호,
+//  다른 앱의 보안 입력)를, 아래에는 특수키 조합(선택 기능)의 손쉬운 사용 권한을 보여준다.
+//  상태를 메뉴에 띄우지 않는 이유는 InputMenu 참조.
+//
+//  권한: 왜 필요한지 설명하고, 버튼 하나로 macOS 권한 요청을 띄운다. 시스템 설정 목록의 표시가 아니라 프로세스가 실제로 받은 권한(AXIsProcessTrusted)과
 //  탭이 실제로 도는지를 보여준다(서명이 바뀌면 둘이 어긋난다).
 //
 //  떠 있는 동안 1초마다 다시 조회하고, 권한이 잡히는 순간 탭을 켠 뒤 잠시 후 스스로 닫힌다.
@@ -12,6 +15,8 @@
 //
 
 import Cocoa
+import Carbon
+import IOKit
 
 final class PermissionWindow: NSObject, NSWindowDelegate {
     static let shared = PermissionWindow()
@@ -19,6 +24,7 @@ final class PermissionWindow: NSObject, NSWindowDelegate {
     private static let autoCloseDelay: TimeInterval = 3
 
     private var window: NSWindow?
+    private let inputLabel = NSTextField(wrappingLabelWithString: "")
     private let statusLabel = NSTextField(labelWithString: "")
     private let detailLabel = NSTextField(wrappingLabelWithString: "")
     private let requestButton = NSButton(title: "권한 허용하기", target: nil, action: nil)
@@ -65,7 +71,7 @@ final class PermissionWindow: NSObject, NSWindowDelegate {
         let w = NSWindow(contentRect: NSRect(x: 0, y: 0, width: 460, height: 260),
                          styleMask: [.titled, .closable],
                          backing: .buffered, defer: false)
-        w.title = "한결 특수키 조합"
+        w.title = "한결 상태"
         w.isReleasedWhenClosed = false
         w.delegate = self
 
@@ -77,6 +83,13 @@ final class PermissionWindow: NSObject, NSWindowDelegate {
             + "한글 입력은 이 권한 없이도 그대로 됩니다. 필요 없으면 허용하지 않아도 됩니다.")
         explanation.font = NSFont.systemFont(ofSize: 12)
         explanation.preferredMaxLayoutWidth = 420
+
+        inputLabel.font = NSFont.boldSystemFont(ofSize: 14)
+        inputLabel.preferredMaxLayoutWidth = 420
+        let keysTitle = NSTextField(labelWithString: "특수키 조합 (선택)")
+        keysTitle.font = NSFont.boldSystemFont(ofSize: 13)
+        let divider = NSBox()
+        divider.boxType = .separator
 
         statusLabel.font = NSFont.boldSystemFont(ofSize: 14)
         detailLabel.font = NSFont.systemFont(ofSize: 12)
@@ -94,11 +107,12 @@ final class PermissionWindow: NSObject, NSWindowDelegate {
         let buttons = NSStackView(views: [requestButton, settingsButton, NSView(), closeButton])
         buttons.orientation = .horizontal
 
-        let stack = NSStackView(views: [explanation, statusLabel, detailLabel, buttons])
+        let stack = NSStackView(views: [inputLabel, divider, keysTitle, explanation, statusLabel, detailLabel, buttons])
         stack.orientation = .vertical
         stack.alignment = .leading
         stack.spacing = 12
         stack.setCustomSpacing(18, after: explanation)
+        divider.widthAnchor.constraint(equalTo: stack.widthAnchor, constant: -40).isActive = true
         stack.edgeInsets = NSEdgeInsets(top: 20, left: 20, bottom: 20, right: 20)
         stack.translatesAutoresizingMaskIntoConstraints = false
         buttons.widthAnchor.constraint(equalTo: stack.widthAnchor, constant: -40).isActive = true
@@ -109,6 +123,8 @@ final class PermissionWindow: NSObject, NSWindowDelegate {
 
     // 실제 권한과 탭 상태를 다시 조회해 표시한다. 권한이 방금 잡혔으면 탭을 켜고 닫기를 예약한다.
     private func refresh() {
+        inputLabel.stringValue = pauseReason() ?? "한글 입력: 정상"
+
         let tap = SpecialKeyTap.shared
         if tap.isTrusted {
             tap.startIfTrusted()
@@ -148,7 +164,29 @@ final class PermissionWindow: NSObject, NSWindowDelegate {
                 ? "권한이 확인됐습니다. \(Int(Self.autoCloseDelay))초 뒤 이 창이 자동으로 닫힙니다."
                 : "한글·영문 어느 입력 소스에서든 동작합니다."
         }
-        InputMenu.shared.refreshPermissionState()
+    }
+
+    // 한글 조합을 일부러 멈춘 이유. 멈추지 않았으면 nil.
+    private func pauseReason() -> String? {
+        if TTYPasswordWatcher.shared.holdingSecureInput {
+            return "한글 일시 중지: 터미널 암호 입력 감지"
+        }
+        if IsSecureEventInputEnabled() {
+            let name = Self.secureInputOwnerPID()
+                .flatMap { NSRunningApplication(processIdentifier: $0)?.localizedName } ?? "다른 앱"
+            return "한글 일시 중지: ‘\(name)’이(가) 보안 입력을 켜 둠\n"
+                + "암호 입력이 끝났는데도 그대로면 화면을 잠갔다 풀면 해제됩니다."
+        }
+        return nil
+    }
+
+    // 지금 secure input을 켜 둔 프로세스. WindowServer가 IORegistry에 기록해 둔다.
+    private static func secureInputOwnerPID() -> pid_t? {
+        let root = IORegistryGetRootEntry(kIOMainPortDefault)
+        defer { IOObjectRelease(root) }
+        guard let users = IORegistryEntryCreateCFProperty(root, "IOConsoleUsers" as CFString, kCFAllocatorDefault, 0)?
+                .takeRetainedValue() as? [[String: Any]] else { return nil }
+        return users.lazy.compactMap { $0["kCGSSessionSecureInputPID"] as? Int }.first.map(pid_t.init)
     }
 
     // macOS 권한 요청 창을 띄운다. 이 창은 일반 레벨이라 요청 창이 위에 뜬다.

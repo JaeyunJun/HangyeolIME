@@ -175,11 +175,10 @@ final class HangyeolInputController: IMKInputController {
         return false
     }
 
-    // IMK가 키마다 부른다. 메뉴 구성에 관한 제약은 InputMenu 참조.
+    // IMK가 키마다 부른다. 메뉴는 절대 바꾸지 않는다(InputMenu 참조).
     override func menu() -> NSMenu! {
         SpecialKeyTap.shared.startIfTrusted()   // 권한이 방금 허용됐으면 탭을 켠다
-        InputMenu.shared.refresh()
-        return InputMenu.shared.menu
+        return InputMenu.menu
     }
 
     // [IMK 메뉴 액션] 메뉴 항목의 action은 반드시 이 컨트롤러에 있어야 한다. sender는

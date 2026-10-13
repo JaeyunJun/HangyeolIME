@@ -26,7 +26,7 @@ Debug 로그: `log stream --predicate 'subsystem == "com.jaeyunjun.HangyeolIME"'
 | `InputSource` / `InputSession` | 입력 소스 조회 / 지금 입력 중인 세션, 끊긴 세션 복구 |
 | `SpecialKeyTap` | 특수키 조합 전역 탭(CGEventTap, 전용 스레드) |
 | `TTYPasswordWatcher` | 터미널 암호 프롬프트 감지(tty가 정규 모드 + 에코 끔) |
-| `InputMenu` / `PermissionWindow` | 입력기 메뉴 / 특수키 권한 창 |
+| `InputMenu` / `PermissionWindow` | 고정된 입력기 메뉴(절대 바꾸지 않음) / 한결 상태 창(멈춘 이유, 특수키 권한) |
 | `Log` | Debug 전용 로그(Release에서는 컴파일 단계에서 사라짐) |
 
 ## 입력 모드 구조
