@@ -1,0 +1,2 @@
+/* 입력 소스 목록에 보이는 입력 모드 이름. 키는 Info.plist의 입력 모드 ID다. */
+"com.navilera.inputmethod.NavilIME.Dubeolsik" = "NavilIME";

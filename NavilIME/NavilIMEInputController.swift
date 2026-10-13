@@ -117,7 +117,7 @@ final class NavilIMEInputController: IMKInputController {
     // (Shift·⌘) 들어오는 일반 텍스트 입력은 버리고 조합 확정으로 들어오는 글자만 받는다.
     // 일반 앱에서는 바로 넣는 것과 결과가 같다.
     func insertSpecial(_ output: String) {
-        guard let client = client() as? IMKTextInput else { return }
+        guard let client = client() else { return }
         hangul.flush()
         let commitUnits = hangul.takeCommit()
         _ = hangul.takePreedit()

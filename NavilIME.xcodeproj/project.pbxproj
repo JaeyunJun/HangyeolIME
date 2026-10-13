@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		CFA10B0D000000000000A00E /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = CFA10B0C000000000000A00D /* InfoPlist.strings */; };
 		CF3237BD28D1AACE008941FE /* Log.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF3237BC28D1AACE008941FE /* Log.swift */; };
 		CF39BCA228C42D7200CB35AE /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF39BCA128C42D7200CB35AE /* AppDelegate.swift */; };
 		CF39BCA428C42D7300CB35AE /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CF39BCA328C42D7300CB35AE /* Assets.xcassets */; };
@@ -27,6 +28,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		CFA10B0E000000000000A00F /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		CFA10B0F000000000000A010 /* ko */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ko; path = ko.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		CF3237BC28D1AACE008941FE /* Log.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Log.swift; sourceTree = "<group>"; };
 		CF39BC9E28C42D7200CB35AE /* NavilIME.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = NavilIME.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CF39BCA128C42D7200CB35AE /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -99,6 +102,7 @@
 				CF39BCA828C42D7300CB35AE /* NavilIME.entitlements */,
 				CFA10B02000000000000A003 /* Signing.xcconfig */,
 				CFA10B03000000000000A004 /* Local.xcconfig.example */,
+				CFA10B0C000000000000A00D /* InfoPlist.strings */,
 				CF8F931C2D718F5300955352 /* navilime.tiff */,
 			);
 			path = NavilIME;
@@ -155,6 +159,7 @@
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
+				ko,
 				Base,
 			);
 			mainGroup = CF39BC9528C42D7200CB35AE;
@@ -173,6 +178,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				CF8F931D2D718F5300955352 /* navilime.tiff in Resources */,
+				CFA10B0D000000000000A00E /* InfoPlist.strings in Resources */,
 				CF39BCA428C42D7300CB35AE /* Assets.xcassets in Resources */,
 				CF39BCA728C42D7300CB35AE /* MainMenu.xib in Resources */,
 			);
@@ -205,6 +211,15 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
+		CFA10B0C000000000000A00D /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				CFA10B0E000000000000A00F /* en */,
+				CFA10B0F000000000000A010 /* ko */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
 		CF39BCA528C42D7300CB35AE /* MainMenu.xib */ = {
 			isa = PBXVariantGroup;
 			children = (

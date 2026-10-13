@@ -58,9 +58,7 @@ final class InputMenu {
         if TTYPasswordWatcher.shared.holdingSecureInput {
             reason = "한글 일시 중지: 터미널 암호 입력 감지"
         } else if IsSecureEventInputEnabled() {
-            let name = Self.secureInputOwnerPID()
-                .flatMap { NSRunningApplication(processIdentifier: $0)?.localizedName } ?? "다른 앱"
-            reason = "한글 일시 중지: ‘\(name)’이(가) 보안 입력을 켜 둠 (화면 잠금 후 풀면 해제)"
+            reason = "한글 일시 중지: ‘\(secureInputOwnerName())’이(가) 보안 입력을 켜 둠 (화면 잠금 후 풀면 해제)"
         } else {
             reason = nil
         }
@@ -73,6 +71,20 @@ final class InputMenu {
             menu.addItem(.separator())
         }
         menu.addItem(permissionItem)
+    }
+
+    // menu()가 키마다 불리므로, 이름은 secure input을 쥔 pid가 바뀔 때만 다시 묻는다
+    // (NSRunningApplication은 LaunchServices에 XPC로 묻는다).
+    private var ownerCache: (pid: pid_t?, name: String)?
+
+    private func secureInputOwnerName() -> String {
+        let pid = Self.secureInputOwnerPID()
+        if let cache = ownerCache, cache.pid == pid {
+            return cache.name
+        }
+        let name = pid.flatMap { NSRunningApplication(processIdentifier: $0)?.localizedName } ?? "다른 앱"
+        ownerCache = (pid, name)
+        return name
     }
 
     // 지금 secure input을 켜 둔 프로세스. WindowServer가 IORegistry에 기록해 둔다.

@@ -6,6 +6,19 @@
 
 원본: [navilera/NavilIMEforMac](https://github.com/navilera/NavilIMEforMac)
 
+## 2026-10-13 - 입력 모드 구조로 전환, 코드 점검
+
+- Apple 입력기와 같은 구조로 바꿨다: 입력기 아래 입력 모드 `...NavilIME.Dubeolsik`(언어 ko,
+  `smKorean`)를 두고 `TISIconLabels`(Primary = "가")를 모드에 둔다. 앱 수준의 `TISIconLabels`는
+  macOS가 무시해 메뉴 막대에 '가' 글자 아이콘이 나오지 않았다. 목록 이름은
+  `en/ko.lproj/InfoPlist.strings`.
+- 현재 입력 소스 ID가 모드 ID가 되므로 `InputSource`는 번들 ID로 비교한다.
+- 기존 사용자는 입력 소스에서 옛 NavilIME를 지우고 한국어 → NavilIME를 다시 추가해야 한다.
+- 점검 수정: 맨 앞 앱이 터미널이 아닐 때(tty가 없을 때)는 orphan tty(tmux 창)의 암호
+  프롬프트를 보지 않는다. tmux 창이 sudo 프롬프트에 멈춰 있으면 브라우저 등 다른 앱의 한글까지
+  막혔다. 메뉴의 보안 입력 앱 이름은 pid가 바뀔 때만 다시 묻는다(menu()는 키마다 불린다).
+  `insertSpecial`의 불필요한 캐스트 경고 제거.
+
 ## 2026-10-13 - 대기 중 CPU 낭비 제거, '가' 아이콘
 
 - `TTYPasswordWatcher`가 입력기가 가만히 있을 때도 CPU를 약 2~3% 쓰고 있었다(`sample`로 확인).

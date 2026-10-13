@@ -141,12 +141,18 @@ Tools/build-ime.sh Debug    # 진단용. os_log에 입력 내용이 남으니 �
 설치 뒤 새 빌드가 실제로 뜨는지 확인하고, 안 뜨면 직전 설치본으로 되돌립니다
 (입력기가 죽으면 그 입력 소스로는 아무것도 칠 수 없으므로).
 
-처음 한 번은 시스템 설정 → 키보드 → 입력 소스에서 NavilIME를 추가하고, 트레이 메뉴의
-권한 상태 창에서 손쉬운 사용 권한을 허용하세요.
+처음 한 번은 시스템 설정 → 키보드 → 입력 소스 → + → 한국어에서 NavilIME를 추가하고,
+트레이 메뉴의 권한 상태 창에서 손쉬운 사용 권한을 허용하세요.
+
+### 입력 모드 구조
+Apple 입력기처럼 입력기(`com.navilera.inputmethod.NavilIME`) 아래 입력 모드 하나
+(`...NavilIME.Dubeolsik`, 언어 ko)를 두고, 사용자는 이 모드를 선택합니다(`Info.plist`의
+`ComponentInputModeDict`). 그래서 현재 입력 소스 ID는 모드 ID이고, 코드는 번들 ID로
+NavilIME인지 판단합니다(`InputSource`). 목록에 보이는 이름은 `*.lproj/InfoPlist.strings`.
 
 ### 입력기 아이콘
-메뉴 막대·입력 위치 표시에는 `Info.plist`의 `TISIconLabels`(Primary = "가")를 macOS가 직접
-그립니다. Apple 한국어 입력기가 쓰는 방식입니다. 그림 아이콘(`navilime.tiff`, 투명 배경의 '가'
+메뉴 막대·입력 위치 표시에는 입력 모드의 `TISIconLabels`(Primary = "가")를 macOS가 직접
+그립니다(앱 수준에 두면 무시됩니다). Apple 한국어 입력기가 쓰는 방식입니다. 그림 아이콘(`navilime.tiff`, 투명 배경의 '가'
 템플릿 이미지, `TISIconIsTemplate`)은 그 밖의 자리용이며 `swift Tools/make-icon.swift
 NavilIME/navilime.tiff`로 다시 만듭니다. 바꾼 뒤에는 macOS 아이콘 캐시 때문에 입력 소스를
 바꿨다 오거나 다시 로그인해야 보일 수 있습니다.

@@ -9,7 +9,7 @@
 //  vim·top 같은 TUI는 raw 모드라 구분된다.
 //
 //  범위: 지금 입력 중인 tty만 본다. 맨 앞 앱 소유의 tty(프로세스 부모를 따라 그 앱에 닿는 것,
-//  tmux 서버처럼 어느 앱에도 속하지 않는 것 포함) 중 가장 최근에 키 입력을 받은 tty(접근 시각,
+//  맨 앞 앱이 터미널이면 tmux 서버처럼 어느 앱에도 속하지 않는 것 포함) 중 가장 최근에 키 입력을 받은 tty(접근 시각,
 //  `w`의 유휴 시간과 같은 값)와 그보다 recentWindow 이내에 입력을 받은 tty. 뒤쪽 탭의 프롬프트가
 //  다른 앱의 한글까지 막지 않게 하기 위해서다.
 //
@@ -128,6 +128,10 @@ final class TTYPasswordWatcher {
     private func frontTTYAwaitingPassword() -> Bool {
         guard let front = NSWorkspace.shared.frontmostApplication?.processIdentifier else { return false }
         rebuildOwnersIfStale()
+
+        // 맨 앞 앱이 tty를 하나도 갖고 있지 않으면 터미널이 아니다(브라우저 등). 이때 orphan tty
+        // (tmux 창의 sudo 프롬프트 등)까지 보면 터미널 밖의 한글까지 막으므로 보지 않는다.
+        guard ttyOwners.values.contains(where: { !$0.orphan && $0.ancestors.contains(front) }) else { return false }
 
         let uid = getuid()
         var candidates: [(path: String, lastInput: TimeInterval)] = []

@@ -10,13 +10,15 @@ import Foundation
 
 enum InputSource {
     // 시스템의 현재 입력 소스가 NavilIME인가. 다른 프로세스가 바꿔도 바로 반영된다.
+    // 입력 소스 ID는 입력 모드 ID(...NavilIME.Dubeolsik)라 번들 ID로 비교한다.
     static func isNavilSelected() -> Bool {
         guard let source = TISCopyCurrentKeyboardInputSource()?.takeRetainedValue() else { return false }
-        return id(of: source) == Bundle.main.bundleIdentifier
+        return isNavil(source)
     }
 
+    // 선택할 수 있는 NavilIME 입력 모드.
     static func navil() -> TISInputSource? {
-        return enabledKeyboardSources(asciiOnly: false).first { id(of: $0) == Bundle.main.bundleIdentifier }
+        return enabledKeyboardSources(asciiOnly: false).first(where: isNavil)
     }
 
     // ASCII 가능한 '키보드 레이아웃'만 고른다. 입력 모드까지 포함하면 다른 언어 입력기가
@@ -32,9 +34,9 @@ enum InputSource {
         TISSelectInputSource(source)
     }
 
-    private static func id(of source: TISInputSource) -> String? {
-        guard let p = TISGetInputSourceProperty(source, kTISPropertyInputSourceID) else { return nil }
-        return Unmanaged<CFString>.fromOpaque(p).takeUnretainedValue() as String
+    private static func isNavil(_ source: TISInputSource) -> Bool {
+        guard let p = TISGetInputSourceProperty(source, kTISPropertyBundleID) else { return false }
+        return Unmanaged<CFString>.fromOpaque(p).takeUnretainedValue() as String == Bundle.main.bundleIdentifier
     }
 
     private static func enabledKeyboardSources(asciiOnly: Bool) -> [TISInputSource] {
