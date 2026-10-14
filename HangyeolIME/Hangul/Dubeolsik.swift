@@ -93,8 +93,9 @@ enum Dubeolsik {
 
     // 지금 조합에 이 키를 초성으로 더할 수 있는가.
     static func acceptsChoseong(_ comp: inout Composition, _ key: String) -> Bool {
-        // 초성과 중성이 이미 있으면 더 이상 초성이 아니다.
-        if !comp.choseong.isEmpty && !comp.jungseong.isEmpty {
+        // 초성은 중성보다 먼저 온다. 중성이 이미 있으면(초성 없이 모음만 친 "ㅣ" 포함) 이 자음은
+        // 이 글자의 초성이 아니다. 이 제약이 없으면 "ㅣ" 뒤의 "ㄹ"이 거슬러 올라가 "리"가 된다.
+        if !comp.jungseong.isEmpty {
             return false
         }
         return choseong[comp.choseong + key] != nil
@@ -115,9 +116,10 @@ enum Dubeolsik {
         return jungseong[comp.jungseong + key] != nil
     }
 
-    // 지금 조합에 이 키를 종성으로 더할 수 있는가. 중성이 없으면 종성도 없다.
+    // 지금 조합에 이 키를 종성으로 더할 수 있는가. 종성은 초성+중성이 갖춰진 글자에만 붙는다
+    // (초성 없는 "ㅣ"에 받침을 붙이지 않고 다음 글자로 넘긴다).
     static func acceptsJongseong(_ comp: inout Composition, _ key: String) -> Bool {
-        if comp.jungseong.isEmpty {
+        if comp.choseong.isEmpty || comp.jungseong.isEmpty {
             return false
         }
         return jongseong[comp.jongseong + key] != nil

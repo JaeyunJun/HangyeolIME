@@ -3,7 +3,8 @@
 # 기준 해시는 정리 전 원작자 엔진의 출력에서 얻었다. 엔진 동작을 일부러 바꿨다면
 # 바뀐 이유를 확인한 뒤 EXPECTED를 새 값으로 갱신한다.
 set -e
-EXPECTED=1f7e8c732d258e479fa5c132c7a077d6
+# 2.0.1: 초성 없는 모음 뒤 자음을 초성·받침으로 받지 않음(ㅣ+ㄹ → ㅣㄹ). 고정 문장 출력은 그대로.
+EXPECTED=80f28c367bea4993a38cdaf4091b8a17
 ROOT=$(cd "$(dirname "$0")/.." && pwd)
 WORK=$(mktemp -d)
 trap 'rm -rf "$WORK"' EXIT
