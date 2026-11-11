@@ -2,8 +2,8 @@
 //  PermissionWindow.swift
 //  HangyeolIME
 //
-//  한결 상태 창(입력기 메뉴의 유일한 항목). 위에는 한글 조합을 일부러 멈춘 이유(터미널 암호,
-//  다른 앱의 보안 입력)를, 아래에는 특수키 조합(선택 기능)의 손쉬운 사용 권한을 보여준다.
+//  한결 상태 창(입력기 메뉴의 유일한 항목). 위에는 한글 조합을 일부러 멈춘 이유(터미널 암호)를,
+//  아래에는 특수키 조합(선택 기능)의 손쉬운 사용 권한을 보여준다.
 //  상태를 메뉴에 띄우지 않는 이유는 InputMenu 참조.
 //
 //  권한: 왜 필요한지 설명하고, 버튼 하나로 macOS 권한 요청을 띄운다. 시스템 설정 목록의 표시가 아니라 프로세스가 실제로 받은 권한(AXIsProcessTrusted)과
@@ -16,7 +16,6 @@
 
 import Cocoa
 import Carbon
-import IOKit
 
 final class PermissionWindow: NSObject, NSWindowDelegate {
     static let shared = PermissionWindow()
@@ -171,22 +170,7 @@ final class PermissionWindow: NSObject, NSWindowDelegate {
         if TTYPasswordWatcher.shared.holdingSecureInput {
             return "한글 일시 중지: 터미널 암호 입력 감지"
         }
-        if IsSecureEventInputEnabled() {
-            let name = Self.secureInputOwnerPID()
-                .flatMap { NSRunningApplication(processIdentifier: $0)?.localizedName } ?? "다른 앱"
-            return "한글 일시 중지: ‘\(name)’이(가) 보안 입력을 켜 둠\n"
-                + "암호 입력이 끝났는데도 그대로면 화면을 잠갔다 풀면 해제됩니다."
-        }
         return nil
-    }
-
-    // 지금 secure input을 켜 둔 프로세스. WindowServer가 IORegistry에 기록해 둔다.
-    private static func secureInputOwnerPID() -> pid_t? {
-        let root = IORegistryGetRootEntry(kIOMainPortDefault)
-        defer { IOObjectRelease(root) }
-        guard let users = IORegistryEntryCreateCFProperty(root, "IOConsoleUsers" as CFString, kCFAllocatorDefault, 0)?
-                .takeRetainedValue() as? [[String: Any]] else { return nil }
-        return users.lazy.compactMap { $0["kCGSSessionSecureInputPID"] as? Int }.first.map(pid_t.init)
     }
 
     // macOS 권한 요청 창을 띄운다. 이 창은 일반 레벨이라 요청 창이 위에 뜬다.

@@ -55,9 +55,13 @@ final class HangyeolInputController: IMKInputController {
         let keyCode = event.keyCode
         let flags = event.modifierFlags
 
-        // 암호 입력 중(secure input, 또는 터미널 암호 프롬프트)에는 조합하지 않는다.
-        // macOS는 이때 입력 소스를 영문으로 바꿔 주지 않으므로 입력기가 스스로 비켜야 한다.
-        if IsSecureEventInputEnabled() || TTYPasswordWatcher.shared.isPasswordPromptActive() {
+        // 터미널 암호 프롬프트에서는 조합하지 않는다. 터미널은 이때 입력 소스를 영문으로 바꾸지 않는다.
+        //
+        // 다른 앱이 켠 secure input(IsSecureEventInputEnabled)은 보지 않는다. 시스템 전체에 하나뿐인
+        // 값이라, Chrome처럼 켠 채 놓지 않는 앱이 있으면 모든 앱(그 앱만 따져도 그 앱 전체)에서 한글이
+        // 멈췄다. 암호 칸은 앱이 스스로 로마자 입력 소스만 허용해 입력기에 키가 오지 않는다(AppKit
+        // NSSecureTextField, Chromium). macOS 기본 입력기도 이 값을 보지 않는다.
+        if TTYPasswordWatcher.shared.isPasswordPromptActive() {
             return passThrough(client)
         }
 
